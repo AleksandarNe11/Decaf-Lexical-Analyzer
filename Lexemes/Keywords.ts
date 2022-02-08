@@ -1,0 +1,58 @@
+export class Keywords { 
+    keywords: Map<string, number> = new Map<string, number>([
+        ["abstract" , 0],
+        ["continue" , 0],
+        ["for" , 0],
+        ["new" , 0],
+        ["switch" , 0],
+        ["assert" , 0],
+        ["default" , 0],
+        ["goto" , 0],
+        ["package" , 0],
+        ["synchronized" , 0],
+        ["boolean" , 0],
+        ["do" , 0],
+        ["if" , 0],
+        ["private" , 0],
+        ["this" , 0],
+        ["break" , 0],
+        ["double" , 0],
+        ["implements" , 0],
+        ["protected" , 0],
+        ["throw" , 0],
+        ["byte" , 0],
+        ["else" , 0],
+        ["import" , 0],
+        ["public" , 0],
+        ["throws" , 0],
+        ["case" , 0],
+        ["enum" , 0],
+        ["instanceof" , 0],
+        ["return" , 0],
+        ["transient" , 0],
+        ["catch" , 0],
+        ["extends" , 0],
+        ["int" , 0],
+        ["short" , 0],
+        ["trychar" , 0],
+        ["final" , 0],
+        ["interface" , 0],
+        ["static" , 0],
+        ["void" , 0],
+        ["class" , 0],
+        ["finally" , 0],
+        ["long" , 0],
+        ["strictfp" , 0],
+        ["volatile" , 0],
+        ["const" , 0],
+        ["float" , 0],
+        ["native" , 0],
+        ["super" , 0],
+        ["while" , 0]
+    ]); 
+
+
+    contains(keyword: string): boolean { 
+        return this.keywords.has(keyword);
+    }
+}
