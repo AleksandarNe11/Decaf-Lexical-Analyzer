@@ -1,4 +1,4 @@
-import { InputBuffer } from "../InputBuffer";
+import { InputBuffer } from "../BufferSystem/InputBuffer";
 import { RegExpDefns } from "../RegExpDefns";
 import { DFA } from './DFA';
 

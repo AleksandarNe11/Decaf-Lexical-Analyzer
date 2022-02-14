@@ -1,4 +1,4 @@
-import { InputBuffer } from "../InputBuffer";
+import { InputBuffer } from "../BufferSystem/InputBuffer";
 
 export abstract class DFA { 
 

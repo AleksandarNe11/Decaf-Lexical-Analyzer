@@ -9,6 +9,7 @@ let rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+
 rl.question('Enter input: ', (answer : string) => {
     loadBuffer(buffer, b, answer);
     rl.close();
