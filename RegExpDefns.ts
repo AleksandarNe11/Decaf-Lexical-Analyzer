@@ -1,4 +1,7 @@
-export class RegExpDefns { 
+export class RegExpDefns {
+    
+    a: number = 0;
+
     /**
      * returns true if the input character is a lower case or 
      * upper case english letter
