@@ -40,8 +40,17 @@ class NumberDFA extends DFA {
         }
     }
     
+    /**
+     * State behaviour 
+     * 1) Integer State - Reads sucessive digits and stays in same state
+     * 2) 0.[Digit]* state - must read "." to transition
+     * 3) Exit state - must read delimiter to transition out of fxn
+     * @param c 
+     */
     private state2(c: string): void { 
-        if (c === ".") { 
+        if (RegExpDefns.isDigit(c)) {
+            this.state = 2;
+        } else if (c === ".") { 
             this.state = 5; 
         } else if (RegExpDefns.isDelim(c)) { 
             this.state = 9; 
@@ -50,6 +59,11 @@ class NumberDFA extends DFA {
         }
     }
 
+    /**
+     * State Behaviour
+     * 1) Must read a hexadigit in order to transition 
+     * @param c 
+     */
     private state3(c: string): void { 
         if (RegExpDefns.isHexaDigit(c)) { 
             this.state = 4; 
@@ -58,30 +72,48 @@ class NumberDFA extends DFA {
         }
     }
 
+    /**
+     * State behaviour 
+     * 1) Hexadigit read to stay in same state - building Hexadecimal integer
+     * @param c 
+     */
     private state4(c: string): void { 
         // if c isHexaDigit, stay in state 4
         if (!RegExpDefns.isHexaDigit(c)) { 
-            if (RegExpDefns.isDelim(c)) { 
-                this.state = 9; 
-            } else { 
-                this.state = -1;
-            }
+            this.state = 4; 
+        } else if (RegExpDefns.isDelim(c)) { 
+            this.state = 9; 
+        } else { 
+            this.state = -1;
         }
     }
 
+    /**
+     * State behaviour 
+     * 1) building <1 portion of decimal - If digit read stay in same state 
+     * 2) building exponent - if E/e read transition to exponent building state 
+     * 3) Exit state - must read delimiter to transition out of DFA
+     * @param c 
+     */
     private state5(c: string): void { 
         // if c is digit, stay in state 5
-        if (!RegExpDefns.isDigit) { 
-            if (RegExpDefns.isExponentChar(c)) { 
-                this.state = 6; 
-            } else if (RegExpDefns.isDelim(c)) { 
-                this.state = 9; 
-            } else { 
-                this.state = -1; 
-            }
+        if (!RegExpDefns.isDigit) {
+            this.state = 5; 
+        } else if (RegExpDefns.isExponentChar(c)) { 
+            this.state = 6; 
+        } else if (RegExpDefns.isDelim(c)) { 
+            this.state = 9; 
+        } else { 
+            this.state = -1; 
         }
     }
 
+    /**
+     * State behaviour 
+     * 1) Sign Assignment - Optional assignment of sign digit to exponent (+/-) read  
+     * 2) Digit Read - Reads digit to transition into acccepting exponent bulding state 
+     * @param c 
+     */
     private state6(c: string): void { 
         if (c === "+" || c === "-") { 
             this.state = 7; 
@@ -92,6 +124,11 @@ class NumberDFA extends DFA {
         }
     }
 
+    /**
+     * State behaviour 
+     * 1) Digit Read - Reads digit to transition into acccepting exponent bulding state 
+     * @param c 
+     */
     private state7(c: string): void { 
         if (RegExpDefns.isDigit(c)) { 
             this.state = 8; 
@@ -100,6 +137,12 @@ class NumberDFA extends DFA {
         }
     }
     
+    /**
+     * State behaviour 
+     * 1) Digit Read - Reads digit to maintain current state 
+     * 2) Delimiter read - transition into exit state 
+     * @param c 
+     */
     private state8(c: string): void { 
         if (RegExpDefns.isDelim(c)) { 
             this.state = 9; 
@@ -108,6 +151,7 @@ class NumberDFA extends DFA {
         }
     }
 
+    
     protected stateBehaviour(c: string): void {
         switch (this.state) { 
             case 0: 
