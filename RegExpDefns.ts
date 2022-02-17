@@ -1,3 +1,5 @@
+import { Delimiters } from "./Lexemes/Delimiters";
+
 export class RegExpDefns {
     
     a: number = 0;
@@ -54,8 +56,13 @@ export class RegExpDefns {
         return LUD.test(c);
     }
 
+    /**
+     * returns true if input string is a Delimiter
+     * @param c 
+     * @returns 
+     */
     static isDelim(c:string): boolean { 
-        return true; 
+        return Delimiters.contains(c); 
     }
 
     static is1to9(c: string): boolean { 
