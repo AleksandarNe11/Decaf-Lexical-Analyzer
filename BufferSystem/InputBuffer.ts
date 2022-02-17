@@ -35,9 +35,8 @@ export class InputBuffer {
     }
 
     /**
-     * "Digests" and outputs lexeme in buffers contained 
-     * between the pair of pointers (right-pointer not inclusive)
-     * Then moves left-most pointer up to meet right pointer 
+     * "Digests" and outputs lexeme in buffers contained between the pair of pointers 
+     * (right-pointer not inclusive). Then moves left-most pointer up to meet right pointer 
      * @returns string contained between the two pointers 
      */
     digest(): string { 

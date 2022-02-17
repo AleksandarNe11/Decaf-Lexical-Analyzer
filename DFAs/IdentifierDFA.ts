@@ -7,6 +7,8 @@ export class IdentifierDFA extends DFA{
     
     state: number = 0;
 
+    exitState: number = 3; 
+
     /**
      * start state 
      * - if input is a letter transitions to state 2 
@@ -50,7 +52,7 @@ export class IdentifierDFA extends DFA{
         return false; 
     }
 
-    private stateBehaviour(ch: string): void { 
+    protected stateBehaviour(ch: string): void { 
         switch(this.state){
             case 0: 
                 this.start(ch);
