@@ -1,5 +1,4 @@
 export enum TypeDef { 
-    LETTER = "LETTER", 
     NUMBER = "NUMBER", 
     KEYWORD = "KEYWORD", 
     IDENTIFIER = "IDENTIFIER", 
