@@ -20,19 +20,19 @@ export class Delimiters {
            "!", 
            ";", 
            ",", 
-           ",", 
-           ".", 
            ".", 
            "[", 
            "]", 
            "(", 
            ")", 
            "{", 
-           "}"
+           "}", 
+           " ", 
+           "\\n"
         ]
     );  
 
-    static contains(c: string) { 
+    static contains(c: string): boolean { 
         return this.delimSet.has(c); 
     }
 }
