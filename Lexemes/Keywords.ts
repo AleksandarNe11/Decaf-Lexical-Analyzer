@@ -1,4 +1,4 @@
-import { TTypes } from "../TokenTypes";
+import { TTypes } from "../SymbolTable/TokenTypes";
 
 export class Keywords { 
     keywords: Map<string, number> = new Map<string, number>([

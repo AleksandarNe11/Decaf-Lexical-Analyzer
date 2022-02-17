@@ -1,4 +1,4 @@
-import { TTypes } from "../TokenTypes";
+import { TTypes } from "../SymbolTable/TokenTypes";
 
 export class Operators { 
     static operatorMap: Map<String, number> = new Map( 

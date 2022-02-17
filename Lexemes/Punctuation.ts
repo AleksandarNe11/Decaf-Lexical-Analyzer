@@ -1,4 +1,4 @@
-import { TTypes } from "../TokenTypes";
+import { TTypes } from "../SymbolTable/TokenTypes";
 
 export class Punctuation { 
     static puncMap: Map<string, number> = new Map(
