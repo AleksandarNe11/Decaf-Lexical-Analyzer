@@ -15,6 +15,10 @@ export class Punctuation {
         ]
     );
 
+    static getCode(c: string): number { 
+        return this.puncMap.get(c);
+    }
+
     static contains(c: string): boolean { 
         return this.puncMap.has(c); 
     }

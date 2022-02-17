@@ -37,6 +37,9 @@ export class Keywords {
         ["ReadLine", TTypes.T_READLINE]
     ]); 
 
+    getCode(c: string): number { 
+        return this.keywords.get(c); 
+    }
 
     contains(keyword: string): boolean { 
         return this.keywords.has(keyword);

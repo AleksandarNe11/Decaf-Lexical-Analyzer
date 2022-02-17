@@ -21,6 +21,10 @@ export class Operators {
         ]
     ); 
 
+    static getCode(c: string): number { 
+        return this.operatorMap.get(c); 
+    }
+
     static contains(c: string) { 
         return this.operatorMap.has(c); 
     }
