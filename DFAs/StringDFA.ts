@@ -1,37 +1,40 @@
 import { InputBuffer } from "../BufferSystem/InputBuffer";
 import { RegExpDefns } from "../RegExpDefns";
-import { DFA } from './DFA';
+import { DFA } from "./DFA";
 
-
-export class IdentifierDFA extends DFA{
+class StringDFA extends DFA {
+    protected state: number = 0;
+    protected exitState: number = 3;
     
-    state: number = 0;
-
-    exitState: number = 3; 
-
     /**
-     * start state 
-     * - if input is a letter transitions to state 2 
-     * - if input is an underscore transitions to state 1
-     * - otherwise transitions into rejection state 
-     * @param c input character
+     * State Behaviour 
+     * 1) Reads " - opens string to transition to state 1 
+     * @param c 
      */
     start(c: string): void { 
-        if (RegExpDefns.isLetter(c)) 
-            this.state = 2;
-        else if (RegExpDefns.isUnderscore(c))
-            this.state = 1; 
+        if (c === "\"") 
+            this.state = 1;
         else
             this.state = -1;
     }
 
+    /**
+     * State Behaviour 
+     * 1) Reads " - head into state 2  
+     * 2) Reads anything else - stay in state 1
+     * @param c 
+     */
     private state1(c: string): void { 
-        if (RegExpDefns.isLUD(c))
-            this.state=2; 
-        else 
-            this.state=-1; 
+        if (c === "\"") 
+            this.state = 2;
+        else
+            this.state = 1;
     }
 
+    /**
+     * 
+     * @param c 
+     */
     private state2(c: string): void { 
         if(RegExpDefns.isLUD(c))
             this.state=2; 
@@ -54,6 +57,5 @@ export class IdentifierDFA extends DFA{
                 break; 
         }
     }
-
-
+    
 }
