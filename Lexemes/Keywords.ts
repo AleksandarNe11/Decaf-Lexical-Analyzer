@@ -1,7 +1,7 @@
 import { TTypes } from "../SymbolTable/TokenTypes";
 
 export class Keywords { 
-    keywords: Map<string, number> = new Map<string, number>([
+    static keywords: Map<string, number> = new Map<string, number>([
         ["abstract" , TTypes.T_BOOLTYPE],
         ["continue" , TTypes.T_CONTINUE],
         ["for" , TTypes.T_FOR],
@@ -37,11 +37,11 @@ export class Keywords {
         ["ReadLine", TTypes.T_READLINE]
     ]); 
 
-    getCode(c: string): number { 
+    static getCode(c: string): number { 
         return this.keywords.get(c); 
     }
 
-    contains(keyword: string): boolean { 
+    static contains(keyword: string): boolean { 
         return this.keywords.has(keyword);
     }
 }

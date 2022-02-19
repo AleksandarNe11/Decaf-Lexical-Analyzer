@@ -1,4 +1,9 @@
-import { Delimiters } from "./Lexemes/Delimiters";
+import { WhiteSpace } from './../Lexemes/WhiteSpace';
+import { Punctuation } from './../Lexemes/Punctuation';
+import { Operators } from './../Lexemes/Operators';
+import { Keywords } from './../Lexemes/Keywords';
+import { Identifiers } from './../Lexemes/Identifiers';
+import { Delimiters } from './../Lexemes/Delimiters';
 
 export class RegExpDefns {
     
@@ -63,6 +68,22 @@ export class RegExpDefns {
      */
     static isDelim(c:string): boolean { 
         return Delimiters.contains(c); 
+    }
+
+    static isOperator(c: string): boolean { 
+        return Operators.contains(c); 
+    }
+
+    static isKeyword(c: string): boolean { 
+        return Keywords.contains(c);
+    }
+
+    static isPunctuation(c: string) { 
+        return Punctuation.contains(c);
+    }
+
+    static isWhiteSpace(c: string) { 
+        return WhiteSpace.contains(c);
     }
 
     static is1to9(c: string): boolean { 

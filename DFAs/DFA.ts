@@ -14,12 +14,13 @@ export abstract class DFA {
      * @returns true if the DFA reaches exit state, false otherwise  
      */
     public evaluateDFA(ib: InputBuffer): boolean { 
+        this.stateBehaviour(ib.getChar());
         while (this.state != -1) { 
             if (this.state === this.exitState) { 
                 return true;
             }
-            this.stateBehaviour(ib.getChar());
             ib.increment();
+            this.stateBehaviour(ib.getChar());
         }
         return false; 
     };

@@ -28,7 +28,7 @@ export class Delimiters {
            "{", 
            "}", 
            " ", 
-           "\\n"
+           "\n"
         ]
     );  
 

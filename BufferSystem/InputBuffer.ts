@@ -98,6 +98,8 @@ export class InputBuffer {
                 }
             }
             this.increment(); //increment foward pointer
+
+            this.beginp = this.forwardp;
         }
         
         return "";*/

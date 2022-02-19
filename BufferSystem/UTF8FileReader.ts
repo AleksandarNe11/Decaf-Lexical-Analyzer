@@ -46,7 +46,7 @@ export class UTF8FileReader {
      * */
     readChunk(): string {
 
-        let decodedString = '' //return '' by default
+        let decodedString = ''; //return '' by default
 
         if (!this.isOpen) {
             return decodedString;
