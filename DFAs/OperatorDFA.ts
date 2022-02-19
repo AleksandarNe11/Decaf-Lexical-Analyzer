@@ -29,7 +29,7 @@ class OperatorDFA extends DFA {
             if (this.isValidDelim(this.testString)) { 
                 this.lexeme = this.testString;
             } else { 
-                
+                this.state = 1;
             }
         } 
     }
