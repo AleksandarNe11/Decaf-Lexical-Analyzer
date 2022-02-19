@@ -30,16 +30,24 @@ export class InputBuffer {
 
     /**
      * increments second pointer up one index
+     * if forward pointer is greater than the length of either of the buffers
+     * move it to the beginning of the other buffer
      */
     increment(): void {
-        this.forwardp[1] += 1;
+        if (this.forwardp[0] === 1 && this.forwardp[1] >= this.buffer1.length) this.forwardp = [2, 0];
+        else if (this.forwardp[0] === 2 && this.forwardp[1] >= this.buffer2.length) this.forwardp = [1, 0];
+        else this.forwardp[1] += 1;
     }
 
     /**
-     * increments second pointer back one index
+     * decrements second pointer back one index
+     * if forward pointer is less than the length of either of the buffers
+     * move it to the end of the other buffer
      */
     decrement(): void {
-        this.forwardp[1] -= 1;
+        if (this.forwardp[0] === 1 && this.forwardp[1] < 0) this.forwardp = [2, this.buffer1.length - 1];
+        else if (this.forwardp[0] === 2 && this.forwardp[1] < 0) this.forwardp = [1, this.buffer2.length - 1];
+        else this.forwardp[1] -= 1;
     }
 
     /**
