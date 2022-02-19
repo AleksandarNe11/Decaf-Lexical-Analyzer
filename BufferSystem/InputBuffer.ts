@@ -128,13 +128,17 @@ export class InputBuffer {
      * 
      */
     edgeReset(): string {
+        var lexeme: string;
         if (this.beginp[0] !== this.forwardp[0]) { //check both pointers are at different buffers
             if (this.beginp[0] === 1) {
-                return this.buffer1.substring(this.beginp[1], this.buffer1.length - 1) + this.buffer2.substring(0, this.forwardp[1]);
-            } else return this.buffer2.substring(this.beginp[1], this.buffer2.length - 1) + this.buffer1.substring(0, this.forwardp[1]);
-            this.beginp = this.forwardp;
+                lexeme = this.buffer1.substring(this.beginp[1], this.buffer1.length - 1) + this.buffer2.substring(0, this.forwardp[1]);
+                this.getBuffer(1);
+            } else {
+                lexeme = this.buffer2.substring(this.beginp[1], this.buffer2.length - 1) + this.buffer1.substring(0, this.forwardp[1]);
+                this.getBuffer(2);
+            }
         }
-        return "";
+        return lexeme;
     }
 
     getLineNumber(): number { 
