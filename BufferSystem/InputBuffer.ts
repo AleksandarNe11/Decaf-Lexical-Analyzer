@@ -5,8 +5,10 @@ export class InputBuffer {
     private fileReader: UTF8FileReader;
     private buffer1: string; 
     private buffer2: string; 
-    private beginp: number = 0;
-    private forwardp: number = 0;
+
+    private beginp: number[] = [1, 0];
+    private forwardp: number[] = [1, 0];
+
     SENTINEL = 'eof';
     seperators: Array<string> = [' ', ';']; //'*', '+', '-' etc.
 
@@ -108,6 +110,25 @@ export class InputBuffer {
             lexeme = b1.substring(this.beginp, this.forwardp);
         }
         return lexeme;
+    }
+
+    /**
+     * Passed number of buffer to populate and sets buffer to new value
+     * @param num 
+     */
+    getBuffer(num: number): void { 
+        if (num === 1) this.buffer1 = this.fileReader.readChunk();
+        else this.buffer2 = this.fileReader.readChunk();
+    }
+
+    /**
+     * 1) take substrings of beginp to end of one buffer, and beginning of other buffer 
+     * 
+     */
+    edgeReset(): string { 
+
+
+        return "";
     }
 
     getLineNumber(): number { 
