@@ -50,14 +50,9 @@ export class InputBuffer {
     digest(): string {
         var lexeme : string;
         if (this.beginp[0] === this.forwardp[0]) { //both the pointer are in the same buffer
-            if (this.beginp[0] === 1) {
-                lexeme = this.buffer1.substring(this.beginp[1], this.forwardp[1]);
-            } else {
-                lexeme = this.buffer2.substring(this.beginp[1], this.forwardp[1]);
-            }
-        } else { //the pointers are at different buffers
-            lexeme = this.edgeReset();
-        }
+            if (this.beginp[0] === 1) lexeme = this.buffer1.substring(this.beginp[1], this.forwardp[1]);
+            else lexeme = this.buffer2.substring(this.beginp[1], this.forwardp[1]);
+        } else lexeme = this.edgeReset(); //the pointers are at different buffers
         this.beginp = this.forwardp;
         return lexeme;
 
