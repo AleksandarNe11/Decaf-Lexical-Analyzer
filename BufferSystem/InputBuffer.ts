@@ -23,25 +23,27 @@ export class InputBuffer {
     }
 
     /**
-     * returns the current character that the second pointer is referencing 
+     * returns the current character that the second pointer is referencing
+     * checks which buffer the forward pointer in pointing at
      * @returns 
      */
-    getChar(buffer: string): string { 
-        return buffer[this.forwardp];
+    getChar(): string { 
+        if (this.forwardp[0] === 1) return this.buffer1[this.forwardp[1]];
+        else return this.buffer2[this.forwardp[1]];
     }
 
     /**
      * increments second pointer up one index
      */
     increment(): void {
-        this.forwardp += 1;
+        this.forwardp[1] += 1;
     }
 
     /**
      * increments second pointer back one index
      */
     decrement(): void {
-        this.forwardp -= 1;
+        this.forwardp[1] -= 1;
     }
 
     /**
@@ -125,9 +127,13 @@ export class InputBuffer {
      * 1) take substrings of beginp to end of one buffer, and beginning of other buffer 
      * 
      */
-    edgeReset(): string { 
-
-
+    edgeReset(): string {
+        if (this.beginp[0] !== this.forwardp[0]) { //check both pointers are at different buffers
+            if (this.beginp[0] === 1) {
+                return this.buffer1.substring(this.beginp[1], this.buffer1.length - 1) + this.buffer2.substring(0, this.forwardp[1]);
+            } else return this.buffer2.substring(this.beginp[1], this.buffer2.length - 1) + this.buffer1.substring(0, this.forwardp[1]);
+            this.beginp = this.forwardp;
+        }
         return "";
     }
 
