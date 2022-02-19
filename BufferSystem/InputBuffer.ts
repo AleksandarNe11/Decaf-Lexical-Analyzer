@@ -9,10 +9,6 @@ export class InputBuffer {
     private beginp: number[] = [1, 0];
     private forwardp: number[] = [1, 0];
 
-    SENTINEL = 'eof';
-    seperators: Array<string> = [' ', ';']; //'*', '+', '-' etc.
-
-
 
     // may need to be incremented by the calling DFA but needs to exist and increment when \n is encountered
     private lineNumber: number = 1; 
@@ -97,21 +93,6 @@ export class InputBuffer {
         }
         
         return "";
-    }
-    
-    /**
-     * 
-     * @returns 
-     */
-    getString(b1: string, b2: string): String {
-        var lexeme: string;
-        if (this.forwardp < this.beginp) {
-            //using b1.length - 1 to remove the "eof" from the lexeme string
-            lexeme = b1.substring(this.beginp, b1.length - 1) + b2.substring(0, this.forwardp);
-        } else {
-            lexeme = b1.substring(this.beginp, this.forwardp);
-        }
-        return lexeme;
     }
 
     /**
