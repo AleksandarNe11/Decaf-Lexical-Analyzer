@@ -26,4 +26,8 @@ export abstract class DFA {
     };
 
     protected abstract stateBehaviour(C: string): void; 
+
+    public resetDFA() { 
+        this.state = 0; 
+    }
 }

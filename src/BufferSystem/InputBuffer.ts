@@ -155,4 +155,12 @@ export class InputBuffer {
         this.forwardp = [buffer, index]; 
         this.beginp = [buffer, index];
     }
+
+    isAtEndOfFile(): boolean { 
+        return this.endOfFile; 
+    }
+
+    incrementLineNumber(): void { 
+        this.incrementLineNumber; 
+    }
 }
