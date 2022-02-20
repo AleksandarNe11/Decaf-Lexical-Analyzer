@@ -4,7 +4,7 @@ import { DFA } from "./DFA";
 
 export class StringDFA extends DFA {
     protected state: number = 0;
-    protected exitState: number = 2;
+    protected exitState: number = 3;
     
     /**
      * State Behaviour 
@@ -31,6 +31,10 @@ export class StringDFA extends DFA {
             this.state = 1;
     }
 
+    private state2(c: string): void { 
+        this.state = 3; 
+    }
+
     protected stateBehaviour(ch: string): void { 
         switch(this.state){
             case 0: 
@@ -39,6 +43,9 @@ export class StringDFA extends DFA {
             case 1: 
                 this.state1(ch);
                 break; 
+            case 2: 
+                this.state2(ch); 
+                break;
         }
     }
     
