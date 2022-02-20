@@ -32,8 +32,18 @@ export class InputBuffer {
      * @returns 
      */
     getChar(): string { 
-        if (this.forwardp[0] === 1) return this.buffer1[this.forwardp[1]];
-        else return this.buffer2[this.forwardp[1]];
+        if (this.forwardp[0] === 1) return this.returnCharIfBuffer1NotEmpty();
+        else return this.returnCharIfBuffer2NotEmpty();
+    }
+
+    private returnCharIfBuffer1NotEmpty(): string { 
+        if (this.buffer1 == "") return "";
+        else return this.buffer1[this.forwardp[1]]; 
+    }
+
+    private returnCharIfBuffer2NotEmpty(): string { 
+        if (this.buffer2 == "") return "";
+        else return this.buffer2[this.forwardp[1]]; 
     }
 
     /**
@@ -42,8 +52,8 @@ export class InputBuffer {
      * move it to the beginning of the other buffer
      */
     increment(): void {
-        if (this.forwardp[0] === 1 && this.forwardp[1] >= this.buffer1.length) this.forwardp = [2, 0];
-        else if (this.forwardp[0] === 2 && this.forwardp[1] >= this.buffer2.length) this.forwardp = [1, 0];
+        if (this.forwardp[0] === 1 && this.forwardp[1] >= this.buffer1.length - 1) this.forwardp = [2, 0];
+        else if (this.forwardp[0] === 2 && this.forwardp[1] >= this.buffer2.length - 1) this.forwardp = [1, 0];
         else this.forwardp[1]++;
     }
 
@@ -131,5 +141,13 @@ export class InputBuffer {
     beginBackToForward(): void { 
         this.forwardp[0] = this.beginp[0];
         this.forwardp[1] = this.beginp[1]; 
+    }
+
+    /**
+     * returns string of pointer values for debugging
+     */
+    getForwardP(): string { 
+        let forward: string = this.forwardp.toString(); 
+        return forward.concat(": ", this.getChar());
     }
 }

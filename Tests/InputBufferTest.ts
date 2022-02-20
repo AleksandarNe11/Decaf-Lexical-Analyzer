@@ -4,6 +4,9 @@ import {expect} from 'chai';
 describe('Input Buffer Tests', () => { // the tests container
     const ib1 = new InputBuffer("Tests/TestFile.decaf");
     const ib2 = new InputBuffer("Tests/TestFile.decaf", 8); 
+    const ib3 = new InputBuffer("Tests/TestFile.decaf", 8);
+    const ib4 = new InputBuffer("Tests/TestFile.decaf", 6);
+    const ib5 = new InputBuffer("Tests/TestFile.decaf");  
 
     it('Checking getChar()', () => { 
                 
@@ -60,9 +63,23 @@ describe('Input Buffer Tests', () => { // the tests container
     });
 
     it('Checking increment over to second buffer', () => {
-        ib2.increment(); 
-        ib2.increment(); 
-        ib2.increment(); 
-        console.log(ib2.digest()); 
+        for (let i = 0; i<8; i++) { 
+            ib3.increment();
+        }
+        ib3.digest();
+        ib3.increment();
+        expect(ib3.digest()).to.be.equal("="); 
     });
+
+    it("Checking digest across buffers", () => { 
+        for (let i=0; i<4; i++) { 
+            ib4.increment(); 
+        }
+        console.log(ib4.digest()); 
+        for (let i=0; i<4; i++) { 
+            ib4.increment();
+        }
+        expect(ib4.digest()).to.be.equal("num"); 
+    })
+    
 });
