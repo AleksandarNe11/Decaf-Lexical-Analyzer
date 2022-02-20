@@ -36,7 +36,7 @@ export class RegExpDefns {
      * @returns 
      */
     static isDigit(c: string): boolean { 
-        let digit: RegExp = RegExp("[0-9"); 
+        let digit: RegExp = RegExp("[0-9]"); 
         return digit.test(c);
     }
 

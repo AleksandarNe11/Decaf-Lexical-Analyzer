@@ -47,9 +47,5 @@ describe('DFA testing', () => {
     it('StringDFA', () => {
         console.log(s_dfa.evaluateDFA(ib));
     });
-
     
-    
-    
-
 });

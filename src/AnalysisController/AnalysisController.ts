@@ -1,4 +1,4 @@
-import { SymbolTable } from './../SymbolTable/SymbolTable';
+import { SymbolTable } from '../SymbolTable/SymbolTable';
 // from BufferSystem
 import { InputBuffer } from './../BufferSystem/InputBuffer';
 // from DFAs
@@ -8,7 +8,7 @@ import { NumberDFA } from '../DFAs/NumberDFA';
 import { OperatorDFA } from '../DFAs/OperatorDFA';
 import { StringDFA } from '../DFAs/StringDFA';
 import { RegExpDefns } from '../DFAs/RegExpDefns';
-import { isBigInt64Array } from 'util/types';
+import { create } from 'domain';
 
 export class AnalysisController { 
 
@@ -20,12 +20,22 @@ export class AnalysisController {
     operatorDFA: OperatorDFA = new OperatorDFA(); 
     stringDFA: StringDFA = new StringDFA(); 
 
+    symbolTable: SymbolTable; 
+
+    constructor(symbolTable: SymbolTable) { 
+        this.symbolTable = symbolTable; 
+    }
+
     // instantiates input buffer on input file begins lexical analysis
     analyzeFile(fileName: string): void { 
-        let ib = new InputBuffer(fileName);
-
-        while(!ib.isAtEndOfFile) { 
-
+        let ib: InputBuffer = new InputBuffer(fileName);
+        let validString: boolean = false; 
+        
+        while(!ib.isAtEndOfFile()) { 
+            this.lastDFA = this.decideDFA(ib.getChar(), ib);
+            if (this.invokeDFA(ib)) { 
+                this.symbolTable.addToken(); 
+            }
         }
     }
 
@@ -64,11 +74,42 @@ export class AnalysisController {
 
             if (peekAhead === "n") { 
                 ib.incrementLineNumber(); 
+                ib.increment();
             }
         }
 
         return toInvoke; 
     }
+
+    invokeDFA(ib: InputBuffer): boolean { 
+        let valid: boolean = false;
+        switch(this.lastDFA) { 
+            case (DFA.COMMENT): 
+                valid = this.commentDFA.evaluateDFA(ib); 
+                break; 
+            case (DFA.IDENTIFIER): 
+                valid = this.identifierDFA.evaluateDFA(ib); 
+                break; 
+            case (DFA.NUMBER): 
+                valid = this.numberDFA.evaluateDFA(ib); 
+                break; 
+            case (DFA.OPERATOR): 
+                valid = this.operatorDFA.evaluateDFA(ib); 
+                break;
+            case (DFA.OPERATOR): 
+                valid = this.operatorDFA.evaluateDFA(ib); 
+                break;
+            case (DFA.WHITESPACE): 
+                while (ib.getChar() === " ") {
+                    ib.increment(); 
+                } 
+                break;
+        }
+
+        return valid; 
+    }
+
+
 }
 
 enum DFA { 
