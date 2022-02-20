@@ -75,11 +75,19 @@ describe('Input Buffer Tests', () => { // the tests container
         for (let i=0; i<4; i++) { 
             ib4.increment(); 
         }
-        console.log(ib4.digest()); 
         for (let i=0; i<4; i++) { 
             ib4.increment();
         }
         expect(ib4.digest()).to.be.equal("num"); 
+    });
+
+    it("Checking digest on ending lexeme", () => { 
+        for (let i=0; i<7; i++) { 
+            console.log(ib4.getForwardP());
+            ib4.increment();
+        }
+        console.log(ib4.digest()); 
     })
     
+
 });
