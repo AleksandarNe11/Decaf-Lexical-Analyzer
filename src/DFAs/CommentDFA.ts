@@ -28,56 +28,63 @@ export class CommentDFA extends DFA {
         if (c === "/") 
             this.state = 2;
         else if (c === "*")
-            this.state = 4;
+            this.state = 3;
         else
             this.state = -1;
+
+        console.log("state 1");
     }
 
     /**
      * State Behaviour 
-     * 1) Reads \ -> search for n 
+     * 1) Reads \n -> transition to exit state 
      * @param c 
      */
     private state2(c: string): void { 
-        if(c === "\\")
-            this.state=3; 
-    }
-
-    /**
-     * State Behaviour 
-     * 1) Reads n -> transition to exit state 
-     * 2) Reads anything else -> transition back to 2
-     * @param c 
-     */
-     private state3(c: string): void { 
-        if(c === "n")
-            this.state = 3; 
-        else 
-            this.state = 6; 
+        if(c === "\n")
+            this.state=6; 
+        
+        console.log("state 2");
     }
 
     /**
      * State Behaviour 
      * 1) If reads * - enter comment ending state  
-     * 2) Reads anything else -> stay in state 4 
+     * 2) Reads anything else -> stay in state 3 
      * @param c 
      */
-     private state4(c: string): void { 
+     private state3(c: string): void { 
         if(c === "*")
-            this.state = 5;  
+            this.state = 4;
+        else 
+
+        console.log("state 3");
     }
 
     /**
      * State Behaviour 
-     * 1) Reads / -> transition to exit state 
-     * 2) Reads anything else -> transition back to 4
+     * 1) Reads / -> transition to state 5
+     * 2) Reads anything else -> transition back to 3
+     * @param c 
+     */
+     private state4(c: string): void { 
+        if(c === "/")
+            this.state = 5; 
+        else 
+            this.state = 3; 
+
+        console.log("state 4");
+    }
+
+    /**
+     * State Behaviour 
+     * Reads anything -> transition to exit state
      * @param c 
      */
      private state5(c: string): void { 
-        if(c === "/")
-            this.state = 6; 
-        else 
-            this.state = 4; 
+        this.state = 6; 
+        
+        console.log("state 5");
     }
 
     protected stateBehaviour(ch: string): void { 
