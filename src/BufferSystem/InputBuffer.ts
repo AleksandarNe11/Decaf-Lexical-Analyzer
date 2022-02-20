@@ -16,10 +16,11 @@ export class InputBuffer {
     // may need to be incremented by the calling DFA but needs to exist and increment when \n is encountered
     private lineNumber: number = 1; 
 
-    constructor(fileName: string) { 
+    constructor(fileName: string, bufferLength: number = undefined) { 
         // create file reader and open passed file name
         this.fileReader = new UTF8FileReader(); 
-        this.fileReader.open(fileName);
+        if (bufferLength) this.fileReader.open(fileName, bufferLength); 
+        else this.fileReader.open(fileName);
         // populate buffers 
         this.buffer1 = this.fileReader.readChunk(); 
         this.buffer2 = this.fileReader.readChunk(); 
@@ -68,7 +69,8 @@ export class InputBuffer {
             if (this.beginp[0] === 1) lexeme = this.buffer1.substring(this.beginp[1], this.forwardp[1]);
             else lexeme = this.buffer2.substring(this.beginp[1], this.forwardp[1]);
         } else lexeme = this.edgeReset(); //the pointers are at different buffers
-        this.beginp = this.forwardp;
+        this.beginp[0] = this.forwardp[0];
+        this.beginp[1] = this.forwardp[1]; 
         return lexeme;
     }
 
@@ -82,8 +84,8 @@ export class InputBuffer {
     }
 
     /**
-     * 1) take substrings of beginp to end of one buffer, and beginning of other buffer 
-     * 
+     * takes string chunk from end of one buffer and string chunk from end of other buffer 
+     * @returns concatenated string
      */
     edgeReset(): string {
         var lexeme: string;
@@ -103,8 +105,31 @@ export class InputBuffer {
         return this.lineNumber; 
     }
 
+    /**
+     * returns true if buffer1 is full 
+     * @param num buffer number
+     * @returns 
+     */
     bufferFull(num: number): boolean { 
         if (num === 1) return this.buffer1 !== ""; 
         else return this.buffer2 !== ""; 
+    }
+
+    /**
+     * returns buffer1 or buffer2 value depending on input num
+     * @param num buffer number
+     * @returns 
+     */
+    bufferToString(num: number): string { 
+        if (num === 1) return this.buffer1; 
+        else return this.buffer2; 
+    }
+
+    /**
+     * Returns the forward pointer back to the position of the begin pointer
+     */
+    beginBackToForward(): void { 
+        this.forwardp[0] = this.beginp[0];
+        this.forwardp[1] = this.beginp[1]; 
     }
 }

@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 describe('Input Buffer Tests', () => { // the tests container
     const ib1 = new InputBuffer("Tests/TestFile.decaf");
+    const ib2 = new InputBuffer("Tests/TestFile.decaf", 8); 
 
     it('Checking getChar()', () => { 
                 
@@ -30,5 +31,38 @@ describe('Input Buffer Tests', () => { // the tests container
 
     it('Checking bufferFull() with known empty buffer', () => {
         expect(ib1.bufferFull(2)).to.be.false; 
+    });
+
+    it('Checking buffer values with two known buffers', () => {
+        expect(ib2.bufferToString(1) === "int num "); 
+        expect(ib2.bufferToString(2) === "= 16;");
+    });
+
+    it('Checking bufferFull() with two known full buffers', () => {
+        expect(ib2.bufferFull(1)).to.be.true;  
+        expect(ib2.bufferFull(2)).to.be.true; 
+    });
+
+    it('Checking digest of first word', () => {
+        ib2.increment(); 
+        ib2.increment(); 
+        ib2.increment();
+        expect(ib2.digest()).to.be.equal("int");  
+    });
+
+    it('Checking digest of second word', () => {
+        ib2.increment(); 
+        expect(ib2.digest()).to.be.equal(" "); 
+        ib2.increment();  
+        ib2.increment();  
+        ib2.increment();  
+        expect(ib2.digest()).to.be.equal("num"); 
+    });
+
+    it('Checking increment over to second buffer', () => {
+        ib2.increment(); 
+        ib2.increment(); 
+        ib2.increment(); 
+        console.log(ib2.digest()); 
     });
 });
