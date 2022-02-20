@@ -1,5 +1,10 @@
 {
   "dependencies": {
     "@types/node": "^17.0.18"
+  }, 
+  "scripts": { 
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
   }
 }
