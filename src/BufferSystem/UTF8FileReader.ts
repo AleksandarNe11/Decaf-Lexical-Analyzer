@@ -16,7 +16,7 @@ export class UTF8FileReader {
      * open the file | throw
      * @param filename
      */
-    open(filename: string, chunkSize: number = 16 * 1024) {
+    open(filename: string, chunkSize: number = 16 * 1024): void {
         // chunk size 
         this.chunkSize = chunkSize;
         

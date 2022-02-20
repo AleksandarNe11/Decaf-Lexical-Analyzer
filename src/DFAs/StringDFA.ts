@@ -4,7 +4,7 @@ import { DFA } from "./DFA";
 
 class StringDFA extends DFA {
     protected state: number = 0;
-    protected exitState: number = 3;
+    protected exitState: number = 2;
     
     /**
      * State Behaviour 
@@ -31,19 +31,6 @@ class StringDFA extends DFA {
             this.state = 1;
     }
 
-    /**
-     * 
-     * @param c 
-     */
-    private state2(c: string): void { 
-        if(RegExpDefns.isLUD(c))
-            this.state=2; 
-        else if(RegExpDefns.isDelim(c)) 
-            this.state=3; 
-        else; 
-            this.state=-1; 
-    }
-
     protected stateBehaviour(ch: string): void { 
         switch(this.state){
             case 0: 
@@ -51,9 +38,6 @@ class StringDFA extends DFA {
                 break; 
             case 1: 
                 this.state1(ch);
-                break; 
-            case 2: 
-                this.state2(ch);
                 break; 
         }
     }

@@ -1,9 +1,9 @@
-import { WhiteSpace } from './../Lexemes/WhiteSpace';
-import { Punctuation } from './../Lexemes/Punctuation';
-import { Operators } from './../Lexemes/Operators';
-import { Keywords } from './../Lexemes/Keywords';
-import { Identifiers } from './../Lexemes/Identifiers';
-import { Delimiters } from './../Lexemes/Delimiters';
+import { WhiteSpace } from '../Lexemes/WhiteSpace';
+import { Punctuation } from '../Lexemes/Punctuation';
+import { Operators } from '../Lexemes/Operators';
+import { Keywords } from '../Lexemes/Keywords';
+import { Identifiers } from '../Lexemes/Identifiers';
+import { Delimiters } from '../Lexemes/Delimiters';
 
 export class RegExpDefns {
     

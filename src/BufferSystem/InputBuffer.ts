@@ -6,16 +6,23 @@ export class InputBuffer {
     private buffer1: string; 
     private buffer2: string; 
 
+    // dual pointers 
     private beginp: number[] = [1, 0];
     private forwardp: number[] = [1, 0];
+
+    //Need to have some sort of attribute to define movement along 
 
 
     // may need to be incremented by the calling DFA but needs to exist and increment when \n is encountered
     private lineNumber: number = 1; 
 
     constructor(fileName: string) { 
+        // create file reader and open passed file name
         this.fileReader = new UTF8FileReader(); 
         this.fileReader.open(fileName);
+        // populate buffers 
+        this.buffer1 = this.fileReader.readChunk(); 
+        this.buffer2 = this.fileReader.readChunk(); 
     }
 
     /**
@@ -69,7 +76,7 @@ export class InputBuffer {
      * Passed number of buffer to populate and sets buffer to new value
      * @param num 
      */
-    getBuffer(num: number): void { 
+    private getBuffer(num: number): void { 
         if (num === 1) this.buffer1 = this.fileReader.readChunk();
         else this.buffer2 = this.fileReader.readChunk();
     }
@@ -94,5 +101,10 @@ export class InputBuffer {
 
     getLineNumber(): number { 
         return this.lineNumber; 
+    }
+
+    bufferFull(num: number): boolean { 
+        if (num === 1) return this.buffer1 !== ""; 
+        else return this.buffer2 !== ""; 
     }
 }
