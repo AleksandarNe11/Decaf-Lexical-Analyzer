@@ -75,6 +75,7 @@ describe('Input Buffer Tests', () => { // the tests container
         for (let i=0; i<4; i++) { 
             ib4.increment(); 
         }
+        ib4.digest();
         for (let i=0; i<4; i++) { 
             ib4.increment();
         }
@@ -86,7 +87,6 @@ describe('Input Buffer Tests', () => { // the tests container
             console.log(ib4.getForwardP());
             ib4.increment();
         }
-        console.log(ib4.digest()); 
     })
     
 

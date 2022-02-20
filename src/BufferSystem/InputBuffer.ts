@@ -11,7 +11,7 @@ export class InputBuffer {
     private forwardp: number[] = [1, 0];
 
     //Need to have some sort of attribute to define movement along 
-
+    private endOfFile = false; 
 
     // may need to be incremented by the calling DFA but needs to exist and increment when \n is encountered
     private lineNumber: number = 1; 
@@ -37,12 +37,12 @@ export class InputBuffer {
     }
 
     private returnCharIfBuffer1NotEmpty(): string { 
-        if (this.buffer1 == "") return "";
+        if (this.buffer1 == "") { this.endOfFile = true; return ""; }
         else return this.buffer1[this.forwardp[1]]; 
     }
 
     private returnCharIfBuffer2NotEmpty(): string { 
-        if (this.buffer2 == "") return "";
+        if (this.buffer2 == "") { this.endOfFile = true; return ""; }
         else return this.buffer2[this.forwardp[1]]; 
     }
 
@@ -149,5 +149,10 @@ export class InputBuffer {
     getForwardP(): string { 
         let forward: string = this.forwardp.toString(); 
         return forward.concat(": ", this.getChar());
+    }
+
+    setPointerValues(buffer: number, index: number): void { 
+        this.forwardp = [buffer, index]; 
+        this.beginp = [buffer, index];
     }
 }
