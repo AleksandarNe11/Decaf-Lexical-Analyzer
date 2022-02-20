@@ -1,7 +1,7 @@
 import { DFA } from "./DFA";
 import { RegExpDefns } from "./RegExpDefns";
 
-class OperatorDFA extends DFA {
+export class OperatorDFA extends DFA {
     protected state: number = 0;
     protected exitState: number = 1;
 

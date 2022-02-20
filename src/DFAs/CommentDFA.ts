@@ -2,7 +2,7 @@ import { InputBuffer } from "../BufferSystem/InputBuffer";
 import { RegExpDefns } from "./RegExpDefns";
 import { DFA } from "./DFA";
 
-class StringDFA extends DFA {
+export class CommentDFA extends DFA {
     protected state: number = 0;
     protected exitState: number = 6;
     
