@@ -16,6 +16,7 @@ export abstract class DFA {
     public evaluateDFA(ib: InputBuffer): boolean { 
         this.stateBehaviour(ib.getChar());
         while (this.state != -1) { 
+            console.log(this.state);
             if (this.state === this.exitState) { 
                 return true;
             }

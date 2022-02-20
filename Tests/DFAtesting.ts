@@ -24,11 +24,13 @@ describe('DFA testing', () => {
     });
     
     const ib = new InputBuffer("Tests/TestFile.decaf", 8);
-
+    const ib_num = new InputBuffer("Tests/TestNumberFile.decaf");
+    const ib_comment = new InputBuffer("Tests/TestComment.decaf");
     console.log(ib)
+    console.log(ib_num)
 
     it('CommentDFA', () => {
-        console.log(c_dfa.evaluateDFA(ib));
+        console.log(c_dfa.evaluateDFA(ib_comment));
     });
     
     it('IdentifierDFA', () => {
@@ -36,12 +38,20 @@ describe('DFA testing', () => {
     });
 
     it('NumberDFA', () => {
-        console.log(n_dfa.evaluateDFA(ib));
+        console.log(n_dfa.evaluateDFA(ib_num));
     });
 
     it('OperatorDFA', () => {
         console.log(o_dfa.evaluateDFA(ib));
-        console.log(o_dfa.evaluateDFA(ib));
+        console.log(ib.digest());
+        ib.incrementBP();
+        ib.increment();
+        ib.increment();
+        ib.increment();
+        ib.increment();
+        console.log(ib.getChar());
+        console.log(i_dfa.evaluateDFA(ib));
+        console.log(ib.digest());
     });
 
     it('StringDFA', () => {

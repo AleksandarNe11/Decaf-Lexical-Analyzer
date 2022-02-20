@@ -163,4 +163,8 @@ export class InputBuffer {
     incrementLineNumber(): void { 
         this.incrementLineNumber; 
     }
+
+    incrementBP() {
+        this.beginp[1]++;
+    }
 }
