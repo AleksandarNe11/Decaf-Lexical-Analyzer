@@ -80,7 +80,7 @@ export class InputBuffer {
             else lexeme = this.buffer2.substring(this.beginp[1], this.forwardp[1]);
         } else lexeme = this.edgeReset(); //the pointers are at different buffers
         this.beginp[0] = this.forwardp[0];
-        this.beginp[1] = this.forwardp[1]; 
+        this.beginp[1] = this.forwardp[1];
         return lexeme;
     }
 
@@ -101,10 +101,10 @@ export class InputBuffer {
         var lexeme: string;
         if (this.beginp[0] !== this.forwardp[0]) { //check both pointers are at different buffers
             if (this.beginp[0] === 1) {
-                lexeme = this.buffer1.substring(this.beginp[1], this.buffer1.length - 1) + this.buffer2.substring(0, this.forwardp[1]);
+                lexeme = this.buffer1.substring(this.beginp[1], this.buffer1.length) + this.buffer2.substring(0, this.forwardp[1] - 1);
                 this.getBuffer(1);
             } else {
-                lexeme = this.buffer2.substring(this.beginp[1], this.buffer2.length - 1) + this.buffer1.substring(0, this.forwardp[1]);
+                lexeme = this.buffer2.substring(this.beginp[1], this.buffer2.length) + this.buffer1.substring(0, this.forwardp[1] - 1);
                 this.getBuffer(2);
             }
         }
