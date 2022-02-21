@@ -14,7 +14,7 @@ export abstract class DFA {
      * @returns true if the DFA reaches exit state, false otherwise  
      */
     public evaluateDFA(ib: InputBuffer): boolean { 
-        let inputChar: string = ib.getChar(); 
+        let inputChar: string = ib.getChar();
         this.stateBehaviour(inputChar);
         while (this.state != -1) { 
             if (this.state === this.exitState) { 

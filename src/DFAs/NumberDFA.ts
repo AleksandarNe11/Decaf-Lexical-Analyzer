@@ -16,7 +16,7 @@ export class NumberDFA extends DFA {
         if (c === "0") { 
             this.state = 1; 
         } else if (RegExpDefns.is1to9(c)) { 
-            this.state = 2; 
+            this.state = 2;
         } else { 
             this.state = -1;
         }
@@ -35,7 +35,7 @@ export class NumberDFA extends DFA {
         } else if (c === ".") { 
             this.state = 5; 
         } else if (RegExpDefns.isDelim(c)) { 
-            this.state = 9; 
+            this.state = 9;
         } else { 
             this.state = -1; 
         }
@@ -80,7 +80,7 @@ export class NumberDFA extends DFA {
      */
     private state4(c: string): void { 
         // if c isHexaDigit, stay in state 4
-        if (!RegExpDefns.isHexaDigit(c)) { 
+        if (RegExpDefns.isHexaDigit(c)) { 
             this.state = 4; 
         } else if (RegExpDefns.isDelim(c)) { 
             this.state = 9; 
@@ -98,7 +98,7 @@ export class NumberDFA extends DFA {
      */
     private state5(c: string): void { 
         // if c is digit, stay in state 5
-        if (!RegExpDefns.isDigit) {
+        if (RegExpDefns.isDigit(c)) {
             this.state = 5; 
         } else if (RegExpDefns.isExponentChar(c)) { 
             this.state = 6; 
