@@ -22,7 +22,8 @@ export abstract class DFA {
                 return true;
             }
             ib.increment();
-            if (inputChar = ib.getChar()) this.state = 1;
+            inputChar = ib.getChar();
+            if (inputChar === "") this.state = this.exitState;
             else this.stateBehaviour(inputChar);
         }
         this.resetDFA();

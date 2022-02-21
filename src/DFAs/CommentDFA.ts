@@ -41,7 +41,7 @@ export class CommentDFA extends DFA {
      * @param c 
      */
     private state2(c: string): void { 
-        if(c === "\n")
+        if(c === "\n") 
             this.state=6; 
         
     }

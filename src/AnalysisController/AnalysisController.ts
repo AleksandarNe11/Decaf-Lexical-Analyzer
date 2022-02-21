@@ -35,7 +35,7 @@ export class AnalysisController {
     analyzeFile(fileName: string): void { 
         let ib: InputBuffer = new InputBuffer(fileName); 
         
-        for (let i=0; i<= 13; i++) {
+        for (let i = 0; i < 14; i++) {
         // while(!ib.isAtEndOfFile()) { 
             this.lastDFA = this.decideDFA(ib.getChar(), ib);
             if (this.invokeDFA(ib)) { 
@@ -43,6 +43,7 @@ export class AnalysisController {
             } else { 
                 ib.digest(); 
             }
+            if (ib.isAtEndOfFile()) break;
         }
     }
 
@@ -86,10 +87,10 @@ export class AnalysisController {
             toInvoke = DFA.WHITESPACE;
         }
 
-        // console.log("decideDFA: "); 
-        // console.log(toInvoke); 
-        // console.log(ib.getForwardP()); 
-        // console.log(" "); 
+        console.log("decideDFA: "); 
+        console.log(toInvoke); 
+        console.log(ib.getForwardP()); 
+        console.log(" "); 
 
         return toInvoke; 
     }
