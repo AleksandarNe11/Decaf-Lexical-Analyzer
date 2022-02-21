@@ -98,7 +98,7 @@ export class NumberDFA extends DFA {
      */
     private state5(c: string): void { 
         // if c is digit, stay in state 5
-        if (!RegExpDefns.isDigit) {
+        if (RegExpDefns.isDigit(c)) {
             this.state = 5; 
         } else if (RegExpDefns.isExponentChar(c)) { 
             this.state = 6; 

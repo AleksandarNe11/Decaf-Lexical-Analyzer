@@ -88,10 +88,11 @@ describe('DFA testing', () => {
     //     expect(n_dfa.evaluateDFA(ib_num10)).to.be.equal(true);
     // });
 
-    // it('OperatorDFA', () => {
-    //     const ib_op = new InputBuffer("Tests/TestFile.decaf", 8);
-    //     expect(o_dfa.evaluateDFA(ib_op)).to.be.equal(true);
-    // });
+    it('OperatorDFA', () => {
+        const ib_op = new InputBuffer("Tests/TestFile.decaf", 8);
+        ib_op.setPointerValues(1, 12); 
+        expect(o_dfa.evaluateDFA(ib_op)).to.be.equal(true);
+    });
 
     // it('OperatorDFA2', () => {
     //     const ib_op2 = new InputBuffer("Tests/TestOperator.decaf");
