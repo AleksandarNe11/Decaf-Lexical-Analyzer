@@ -94,7 +94,7 @@ describe('DFA testing', () => {
         const ib_op2 = new InputBuffer("Tests/TestOperator.decaf");
         expect(o_dfa.evaluateDFA(ib_op)).to.be.equal(true);
         const ib_op3 = new InputBuffer("Tests/TestOperator2.decaf");
-        expect(o_dfa.evaluateDFA(ib_op)).to.be.equal(true);
+        expect(o_dfa.evaluateDFA(ib_op)).to.be.equal(false);
         const ib_op4 = new InputBuffer("Tests/TestOperator3.decaf");
         expect(o_dfa.evaluateDFA(ib_op)).to.be.equal(true);
         const ib_op5 = new InputBuffer("Tests/TestOperator4.decaf");
