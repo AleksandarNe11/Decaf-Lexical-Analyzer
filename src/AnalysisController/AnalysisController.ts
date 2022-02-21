@@ -35,8 +35,8 @@ export class AnalysisController {
     analyzeFile(fileName: string): void { 
         let ib: InputBuffer = new InputBuffer(fileName); 
         
-        for (let i = 0; i < 16; i++) {
-        // while(!ib.isAtEndOfFile()) { 
+        // for (let i = 0; i < 16; i++) {
+        while(!ib.isAtEndOfFile()) { 
             this.lastDFA = this.decideDFA(ib.getChar(), ib);
             if (this.invokeDFA(ib)) { 
                 this.addToken(ib); 
@@ -65,6 +65,16 @@ export class AnalysisController {
             toInvoke = DFA.WHITESPACE;
         }
 
+        else if (c === "\n") { 
+            ib.increment();
+            toInvoke = DFA.NEWLINE;
+        } 
+
+        else if (c === "\r") { 
+            ib.increment(); 
+            return this.decideDFA(ib.getChar(), ib); 
+        }
+
         else if (RegExpDefns.isDelim(c)) { 
             if (c === "/") { 
                 ib.increment(); 
@@ -80,17 +90,13 @@ export class AnalysisController {
             }
         } else if (c === "\"") { 
             toInvoke = DFA.STRING; 
-        } else if (c === "\n") { 
-            ib.increment();
-            toInvoke = DFA.WHITESPACE;
         } else {
-            toInvoke = DFA.WHITESPACE;
+            toInvoke = DFA.WHITESPACE;  
         }
 
-        // console.log("decideDFA: "); 
-        // console.log(toInvoke); 
-        // console.log(ib.getForwardP()); 
-        // console.log(" "); 
+        console.log("decideDFA: "); 
+        console.log(toInvoke); 
+        console.log(ib.getForwardP()); 
 
         return toInvoke; 
     }
@@ -113,21 +119,46 @@ export class AnalysisController {
             case (DFA.OPERATOR): 
                 valid = this.operatorDFA.evaluateDFA(ib); 
                 break;
-            case (DFA.OPERATOR): 
-                valid = this.operatorDFA.evaluateDFA(ib); 
-                break;
             case (DFA.WHITESPACE): 
                 this.incrementToNextToken(ib); 
                 break;
+            case (DFA.NEWLINE): 
+                ib.increment(); 
+                break;
         }
 
-        console.log("InvokeDFA: "); 
-        console.log(this.lastDFA); 
-        console.log(valid); 
-        console.log(ib.getForwardP()); 
-        console.log(" "); 
+        console.log("invokeDFA: "); 
+        console.log("DFAInvoked: " + this.DFAInvoked()); 
+        console.log("Next: " + ib.getForwardP()); 
+        console.log(" ");
 
         return valid; 
+    }
+
+    private DFAInvoked(): string {
+        let toReturn: string = "" 
+        switch(this.lastDFA) { 
+            case (DFA.COMMENT): 
+                toReturn = "CommentDFA"; 
+                break; 
+            case (DFA.IDENTIFIER): 
+                toReturn = "IdentifierDFA"; 
+                break; 
+            case (DFA.NUMBER): 
+                toReturn = "NumberDFA"; 
+                break; 
+            case (DFA.OPERATOR): 
+                toReturn = "OperatorDFA"; 
+                break;
+            case (DFA.WHITESPACE): 
+                toReturn = "WhitespaceDFA"; 
+                break;
+            case (DFA.NEWLINE): 
+                toReturn = "NewlineDFA"; 
+                break;
+        }
+
+        return toReturn; 
     }
 
     addToken(ib: InputBuffer) { 
@@ -192,5 +223,5 @@ export class AnalysisController {
 }
 
 enum DFA { 
-    COMMENT, IDENTIFIER, NUMBER, OPERATOR, STRING, WHITESPACE
+    COMMENT, IDENTIFIER, NUMBER, OPERATOR, STRING, WHITESPACE, NEWLINE
 }

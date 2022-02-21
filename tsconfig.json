@@ -3,6 +3,7 @@
       "module": "commonjs",
       "noImplicitAny": true,
       "removeComments": true,
+      "outDir": "build",
       "preserveConstEnums": true,
       "sourceMap": true
     },
