@@ -11,9 +11,9 @@ describe('AnalysisController Tests', () => { // the tests container
     it('Test Analyze file on Basic File', () => { // the single test
         
 
-        // at.analyzeFile("Tests/TestFile.decaf"); 
+        at.analyzeFile("Tests/TestFile.decaf"); 
 
-        expect(st.getLength).to.be.equal(5); 
+        expect(st.getLength()).to.be.equal(5); 
     });
 
     const ib1: InputBuffer = new InputBuffer("Tests/TestFile.decaf");

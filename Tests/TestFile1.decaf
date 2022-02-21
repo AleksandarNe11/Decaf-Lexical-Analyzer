@@ -1,0 +1,9 @@
+class Test { 
+    int a = 13; 
+    int b = 11; 
+
+    func int addIfaGTb() { 
+        if (a >= b) 
+            return a + b; 
+    }
+}

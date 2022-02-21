@@ -1,5 +1,4 @@
 import { InputBuffer } from './../BufferSystem/InputBuffer';
-import { TypeDef } from './../../TypeDef';
 import { Token } from "./Token";
 
 export class SymbolTable { 
