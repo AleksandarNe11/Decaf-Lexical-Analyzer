@@ -1,5 +1,5 @@
 export interface Token { 
-    typeDef: String; 
-    value: String; 
+    typeDef: number; 
+    value: string | number; 
     lineNumber: number; 
 }

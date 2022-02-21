@@ -3,6 +3,7 @@ import { InputBuffer } from "../BufferSystem/InputBuffer";
 import { DFA } from "./DFA";
 
 export class NumberDFA extends DFA {
+    
     protected exitState: number = 9;
     
     protected state: number = 0;

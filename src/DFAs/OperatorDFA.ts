@@ -31,7 +31,7 @@ export class OperatorDFA extends DFA {
             } else { 
                 this.state = 1;
             }
-        } 
+        }
     }
 
     private isValidDelim(lexeme: string): boolean { 

@@ -95,4 +95,14 @@ export class RegExpDefns {
         let digit: RegExp = RegExp("[0-9]|[a-f]|[A-F]"); 
         return digit.test(c); 
     }
+
+    static isInt(c: string) { 
+        let number: RegExp = RegExp("[0-9]+"); 
+        return number.test(c);
+    }
+
+    static isDouble(c: string) { 
+        let number: RegExp = RegExp("[0-9].[0-9]*(E(+|-)?([0-9]*))?"); 
+        return number.test(c);
+    }
 }

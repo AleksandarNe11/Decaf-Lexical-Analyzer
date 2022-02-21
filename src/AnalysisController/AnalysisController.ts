@@ -1,3 +1,5 @@
+import { TTypes } from './../SymbolTable/TokenTypes';
+import { TypeDef } from './../../TypeDef';
 import { SymbolTable } from '../SymbolTable/SymbolTable';
 // from BufferSystem
 import { InputBuffer } from './../BufferSystem/InputBuffer';
@@ -9,6 +11,11 @@ import { OperatorDFA } from '../DFAs/OperatorDFA';
 import { StringDFA } from '../DFAs/StringDFA';
 import { RegExpDefns } from '../DFAs/RegExpDefns';
 import { create } from 'domain';
+// from Lexemes
+import { Identifiers } from './../Lexemes/Identifiers';
+import { Operators } from '../Lexemes/Operators';
+import { Keywords } from '../Lexemes/Keywords';
+import { Punctuation } from '../Lexemes/Punctuation';
 
 export class AnalysisController { 
 
@@ -28,13 +35,14 @@ export class AnalysisController {
 
     // instantiates input buffer on input file begins lexical analysis
     analyzeFile(fileName: string): void { 
-        let ib: InputBuffer = new InputBuffer(fileName);
-        let validString: boolean = false; 
+        let ib: InputBuffer = new InputBuffer(fileName); 
         
         while(!ib.isAtEndOfFile()) { 
             this.lastDFA = this.decideDFA(ib.getChar(), ib);
             if (this.invokeDFA(ib)) { 
-                this.symbolTable.addToken(); 
+                this.addToken(ib); 
+            } else { 
+                ib.digest(); 
             }
         }
     }
@@ -67,17 +75,10 @@ export class AnalysisController {
             }
         } else if (c === "\"") { 
             toInvoke = DFA.STRING; 
-        } else if (c === "\\") { 
-            ib.increment(); 
-            let peekAhead: string = ib.getChar(); 
-            ib.decrement(); 
-
-            if (peekAhead === "n") { 
-                ib.incrementLineNumber(); 
-                ib.increment();
-            }
+        } else if (c === "\n") { 
+            ib.incrementLineNumber(); 
+            ib.increment();
         }
-
         return toInvoke; 
     }
 
@@ -100,15 +101,67 @@ export class AnalysisController {
                 valid = this.operatorDFA.evaluateDFA(ib); 
                 break;
             case (DFA.WHITESPACE): 
-                while (ib.getChar() === " ") {
-                    ib.increment(); 
-                } 
+                this.incrementToNextToken(ib); 
                 break;
         }
 
         return valid; 
     }
 
+    addToken(ib: InputBuffer) { 
+        let lexeme: string = ib.digest(); 
+        
+        let typeDef: number; 
+        let value: string; 
+
+        switch(this.lastDFA) { 
+            case (DFA.IDENTIFIER): 
+                if (RegExpDefns.isKeyword(lexeme)) { 
+                    typeDef = Keywords.getCode(lexeme);
+                    value = lexeme;  
+                } else if (Identifiers.contains(lexeme)) { 
+                    // TODO add existing lexeme value to Symbol Table
+                    typeDef = TTypes.T_ID; 
+                    value = Identifiers.getCode(lexeme);
+                } else { 
+                    // Create new identifier in identifier and add lexeme to symbol table
+                    Identifiers.add(lexeme);
+                    typeDef = TTypes.T_ID; 
+                    value = Identifiers.getCode(lexeme);
+                }
+                break; 
+            case (DFA.NUMBER): 
+                if (RegExpDefns.isInt) { 
+                    typeDef = TTypes.T_INTCONSTANT; 
+                    value = lexeme;
+                } else { 
+                    typeDef = TTypes.T_DOUBLE; 
+                    value = lexeme; 
+                }
+                break; 
+            case (DFA.OPERATOR): 
+                if (RegExpDefns.isOperator(lexeme)) { 
+                    typeDef = Operators.getCode(lexeme); 
+                    value = lexeme; 
+                } else if (RegExpDefns.isPunctuation(lexeme)) { 
+                    typeDef = Punctuation.getCode(lexeme); 
+                    value = lexeme; 
+                }  
+                break;
+            case (DFA.STRING): 
+                typeDef = TTypes.T_STRINGCONSTANT; 
+                value = lexeme; 
+                break; 
+        }
+
+        if (value) this.symbolTable.addToken(typeDef, value, ib);
+    }
+
+    incrementToNextToken(ib: InputBuffer) { 
+        while(ib.getChar() == " ") {
+            ib.increment(); 
+        }
+    }
 
 }
 
