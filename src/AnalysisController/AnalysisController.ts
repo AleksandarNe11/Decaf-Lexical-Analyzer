@@ -76,7 +76,7 @@ export class AnalysisController {
         } else if (c === "\"") { 
             toInvoke = DFA.STRING; 
         } else if (c === "\n") { 
-            ib.incrementLineNumber(); 
+            toInvoke = DFA.WHITESPACE;
             ib.increment();
         }
         return toInvoke; 

@@ -1,3 +1,4 @@
+import { stringify } from 'querystring';
 import { UTF8FileReader } from './UTF8FileReader';
 
 export class InputBuffer { 
@@ -32,8 +33,13 @@ export class InputBuffer {
      * @returns 
      */
     getChar(): string { 
-        if (this.forwardp[0] === 1) return this.returnCharIfBuffer1NotEmpty();
-        else return this.returnCharIfBuffer2NotEmpty();
+        let value: string;
+        if (this.forwardp[0] === 1) value =  this.returnCharIfBuffer1NotEmpty();
+        else value = this.returnCharIfBuffer2NotEmpty();
+
+        if(value === "\n") this.incrementLineNumber(); 
+
+        return value; 
     }
 
     private returnCharIfBuffer1NotEmpty(): string { 
