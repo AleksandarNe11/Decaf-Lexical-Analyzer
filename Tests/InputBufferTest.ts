@@ -84,7 +84,7 @@ describe('Input Buffer Tests', () => { // the tests container
 
     it("Checking digest on ending lexeme", () => { 
         for (let i=0; i<7; i++) { 
-            console.log(ib4.getForwardP());
+            //console.log(ib4.getForwardP());
             ib4.increment();
         }
     })
