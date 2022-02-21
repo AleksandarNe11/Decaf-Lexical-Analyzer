@@ -23,6 +23,8 @@ export class IdentifierDFA extends DFA{
             this.state = 1; 
         else
             this.state = -1;
+
+        console.log("start");
     }
 
     private state1(c: string): void { 
@@ -30,13 +32,18 @@ export class IdentifierDFA extends DFA{
             this.state=2; 
         else 
             this.state=-1; 
+
+        console.log("state1");
     }
 
-    private state2(c: string): void { 
+    private state2(c: string): void {
+        console.log("state2"); 
         if(RegExpDefns.isLUD(c))
             this.state=2; 
-        else if(RegExpDefns.isDelim(c)) 
+        else if(RegExpDefns.isDelim(c)) {
             this.state=3; 
+            console.log("state3"); 
+        }
         else; 
             this.state=-1; 
     }

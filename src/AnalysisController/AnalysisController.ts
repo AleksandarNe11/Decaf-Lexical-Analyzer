@@ -54,11 +54,19 @@ export class AnalysisController {
     decideDFA(c: string, ib: InputBuffer): number { 
         //assign invalid in case of invalid character
         let toInvoke: number = DFA.WHITESPACE; 
+
+        console.log("Comment: " + DFA.COMMENT);
+        console.log("Identifier: " + DFA.IDENTIFIER);
+        console.log("Number: " + DFA.NUMBER);
+        console.log("Operator: " + DFA.OPERATOR);
+        console.log("String: " + DFA.STRING);
+        console.log("Whitespace: " + DFA.WHITESPACE);
         if (RegExpDefns.isDigit(c)) 
             toInvoke =  DFA.NUMBER; 
 
-        else if (RegExpDefns.isLetter) 
+        else if (RegExpDefns.isLetter) {
             toInvoke = DFA.IDENTIFIER;
+        }
 
         else if (RegExpDefns.isDelim(c)) { 
             if (c === "/") { 
@@ -76,9 +84,12 @@ export class AnalysisController {
         } else if (c === "\"") { 
             toInvoke = DFA.STRING; 
         } else if (c === "\n") { 
-            toInvoke = DFA.WHITESPACE;
             ib.increment();
+            toInvoke = DFA.WHITESPACE;
+        } else {
+            toInvoke = DFA.WHITESPACE;
         }
+
         return toInvoke; 
     }
 

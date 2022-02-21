@@ -12,4 +12,8 @@ export class SymbolTable {
     generateToken(type: number, value: string, ib: InputBuffer): Token { 
         return {typeDef: type, value: value, lineNumber: ib.getLineNumber()}
     }
+
+    getLength(): number { 
+        return this.symbols.length;
+    }
 }
