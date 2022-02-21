@@ -32,7 +32,7 @@ export class CommentDFA extends DFA {
         else
             this.state = -1;
 
-        console.log("state 1");
+
     }
 
     /**
@@ -44,7 +44,6 @@ export class CommentDFA extends DFA {
         if(c === "\n")
             this.state=6; 
         
-        console.log("state 2");
     }
 
     /**
@@ -57,8 +56,7 @@ export class CommentDFA extends DFA {
         if(c === "*")
             this.state = 4;
         else 
-
-        console.log("state 3");
+            this.state = 3;
     }
 
     /**
@@ -72,8 +70,6 @@ export class CommentDFA extends DFA {
             this.state = 5; 
         else 
             this.state = 3; 
-
-        console.log("state 4");
     }
 
     /**
@@ -83,8 +79,6 @@ export class CommentDFA extends DFA {
      */
      private state5(c: string): void { 
         this.state = 6; 
-        
-        console.log("state 5");
     }
 
     protected stateBehaviour(ch: string): void { 

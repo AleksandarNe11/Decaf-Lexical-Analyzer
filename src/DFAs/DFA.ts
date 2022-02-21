@@ -14,16 +14,16 @@ export abstract class DFA {
      * @returns true if the DFA reaches exit state, false otherwise  
      */
     public evaluateDFA(ib: InputBuffer): boolean { 
-        console.log(ib.getForwardP());
-        this.stateBehaviour(ib.getChar());
+        let inputChar: string = ib.getChar(); 
+        this.stateBehaviour(inputChar);
         while (this.state != -1) { 
-            console.log(this.state);
             if (this.state === this.exitState) { 
+                this.resetDFA();
                 return true;
             }
             ib.increment();
-            this.stateBehaviour(ib.getChar());
-            console.log(ib.getForwardP());
+            if (inputChar = ib.getChar()) this.state = 1;
+            else this.stateBehaviour(inputChar);
         }
         this.resetDFA();
         return false; 

@@ -43,6 +43,7 @@ describe('Input Buffer Tests', () => { // the tests container
 
     it('Checking bufferFull() with two known full buffers', () => {
         expect(ib2.bufferFull(1)).to.be.true;  
+        ib2.populateBuffer2();
         expect(ib2.bufferFull(2)).to.be.true; 
     });
 

@@ -15,4 +15,8 @@ export class SymbolTable {
     getLength(): number { 
         return this.symbols.length;
     }
+
+    getTokens(): Token[] { 
+        return this.symbols; 
+    }
 }

@@ -56,9 +56,9 @@ export class RegExpDefns {
      * @param c input character
      * @returns boolean
      */
-    static isLUD(c: string): boolean { 
-        let LUD: RegExp = RegExp("[a-z]|[A-Z]|_|[0-9]"); 
-        return LUD.test(c);
+    static isLUD(c: string): boolean {  
+        if (this.isDigit(c) || this.isLetter(c) || c === "_") return true; 
+        return false;
     }
 
     /**

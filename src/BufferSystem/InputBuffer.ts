@@ -24,7 +24,7 @@ export class InputBuffer {
         else this.fileReader.open(fileName);
         // populate buffers 
         this.buffer1 = this.fileReader.readChunk(); 
-        this.buffer2 = this.fileReader.readChunk(); 
+        this.buffer2 = ""; 
     }
 
     /**
@@ -58,9 +58,25 @@ export class InputBuffer {
      * move it to the beginning of the other buffer
      */
     increment(): void {
-        if (this.forwardp[0] === 1 && this.forwardp[1] >= this.buffer1.length - 1) this.forwardp = [2, 0];
-        else if (this.forwardp[0] === 2 && this.forwardp[1] >= this.buffer2.length - 1) this.forwardp = [1, 0];
+        if (this.forwardp[0] === 1 && this.forwardp[1] >= this.buffer1.length - 1) {
+            this.populateBuffer2();
+            this.forwardp = [2, 0];
+        } 
+        else if  (this.forwardp[0] === 2 && this.forwardp[1] >= this.buffer2.length - 1) {
+            this.populateBuffer1();
+            this.forwardp = [1, 0];
+        }
         else this.forwardp[1]++;
+    }
+
+    populateBuffer1(): void { 
+        this.buffer1 = this.fileReader.readChunk(); 
+        if (this.buffer1 === "") this.endOfFile = true; 
+    }
+
+    populateBuffer2(): void { 
+        this.buffer2 = this.fileReader.readChunk(); 
+        if (this.buffer2 === "") this.endOfFile = true;
     }
 
     /**
@@ -108,10 +124,8 @@ export class InputBuffer {
         if (this.beginp[0] !== this.forwardp[0]) { //check both pointers are at different buffers
             if (this.beginp[0] === 1) {
                 lexeme = this.buffer1.substring(this.beginp[1], this.buffer1.length) + this.buffer2.substring(0, this.forwardp[1] - 1);
-                this.getBuffer(1);
             } else {
                 lexeme = this.buffer2.substring(this.beginp[1], this.buffer2.length) + this.buffer1.substring(0, this.forwardp[1] - 1);
-                this.getBuffer(2);
             }
         }
         return lexeme;

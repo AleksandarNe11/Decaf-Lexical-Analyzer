@@ -35,7 +35,8 @@ export class AnalysisController {
     analyzeFile(fileName: string): void { 
         let ib: InputBuffer = new InputBuffer(fileName); 
         
-        while(!ib.isAtEndOfFile()) { 
+        for (let i=0; i<= 13; i++) {
+        // while(!ib.isAtEndOfFile()) { 
             this.lastDFA = this.decideDFA(ib.getChar(), ib);
             if (this.invokeDFA(ib)) { 
                 this.addToken(ib); 
@@ -52,13 +53,6 @@ export class AnalysisController {
     decideDFA(c: string, ib: InputBuffer): number { 
         //assign invalid in case of invalid character
         let toInvoke: number = DFA.WHITESPACE; 
-
-        console.log("Comment: " + DFA.COMMENT);
-        console.log("Identifier: " + DFA.IDENTIFIER);
-        console.log("Number: " + DFA.NUMBER);
-        console.log("Operator: " + DFA.OPERATOR);
-        console.log("String: " + DFA.STRING);
-        console.log("Whitespace: " + DFA.WHITESPACE);
         if (RegExpDefns.isDigit(c)) 
             toInvoke =  DFA.NUMBER; 
 
@@ -92,6 +86,11 @@ export class AnalysisController {
             toInvoke = DFA.WHITESPACE;
         }
 
+        // console.log("decideDFA: "); 
+        // console.log(toInvoke); 
+        // console.log(ib.getForwardP()); 
+        // console.log(" "); 
+
         return toInvoke; 
     }
 
@@ -102,6 +101,9 @@ export class AnalysisController {
                 valid = this.commentDFA.evaluateDFA(ib); 
                 break; 
             case (DFA.IDENTIFIER): 
+                // console.log("evaluate identifier");
+                // console.log("starting char:" + ib.getForwardP()); 
+                // console.log(" "); 
                 valid = this.identifierDFA.evaluateDFA(ib); 
                 break; 
             case (DFA.NUMBER): 
@@ -118,6 +120,12 @@ export class AnalysisController {
                 break;
         }
 
+        // console.log("InvokeDFA: "); 
+        // console.log(this.lastDFA); 
+        // console.log(valid); 
+        // console.log(ib.getForwardP()); 
+        // console.log(" "); 
+
         return valid; 
     }
 
@@ -126,6 +134,10 @@ export class AnalysisController {
         
         let typeDef: number; 
         let value: string; 
+
+        // console.log("addToken: "); 
+        // console.log(this.lastDFA); 
+        // console.log(ib.getForwardP()); 
 
         switch(this.lastDFA) { 
             case (DFA.IDENTIFIER): 
@@ -161,7 +173,7 @@ export class AnalysisController {
                     value = lexeme; 
                 }  
                 break;
-            case (DFA.STRING): 
+            case (DFA.STRING):
                 typeDef = TTypes.T_STRINGCONSTANT; 
                 value = lexeme; 
                 break; 

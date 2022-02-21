@@ -24,7 +24,21 @@ describe('AnalysisController Tests', () => { // the tests container
 
     it('Test DecideDFA for Whitespace', () => { 
         ib1.setPointerValues(1, 3);
-        console.log(ib1.getForwardP());
         expect(at.decideDFA(ib1.getChar(), ib1)).to.be.equal(5);
+    })
+
+    it('Test DecideDFA for Operator', () => { 
+        ib1.setPointerValues(1, 8);
+        expect(at.decideDFA(ib1.getChar(), ib1)).to.be.equal(3);
+    })
+
+    it('Test DecideDFA for Number', () => { 
+        ib1.setPointerValues(1, 10);
+        expect(at.decideDFA(ib1.getChar(), ib1)).to.be.equal(2);
+    })
+
+    it('Test DecideDFA for Operator', () => { 
+        ib1.setPointerValues(1, 12);
+        expect(at.decideDFA(ib1.getChar(), ib1)).to.be.equal(3);
     })
 });
