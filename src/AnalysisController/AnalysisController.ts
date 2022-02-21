@@ -1,5 +1,4 @@
 import { TTypes } from './../SymbolTable/TokenTypes';
-import { TypeDef } from './../../TypeDef';
 import { SymbolTable } from '../SymbolTable/SymbolTable';
 // from BufferSystem
 import { InputBuffer } from './../BufferSystem/InputBuffer';
@@ -10,7 +9,6 @@ import { NumberDFA } from '../DFAs/NumberDFA';
 import { OperatorDFA } from '../DFAs/OperatorDFA';
 import { StringDFA } from '../DFAs/StringDFA';
 import { RegExpDefns } from '../DFAs/RegExpDefns';
-import { create } from 'domain';
 // from Lexemes
 import { Identifiers } from './../Lexemes/Identifiers';
 import { Operators } from '../Lexemes/Operators';
@@ -64,8 +62,12 @@ export class AnalysisController {
         if (RegExpDefns.isDigit(c)) 
             toInvoke =  DFA.NUMBER; 
 
-        else if (RegExpDefns.isLetter) {
+        else if (RegExpDefns.isLetter(c)) {
             toInvoke = DFA.IDENTIFIER;
+        }
+
+        else if (c === " ") { 
+            toInvoke = DFA.WHITESPACE;
         }
 
         else if (RegExpDefns.isDelim(c)) { 
