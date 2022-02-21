@@ -12,6 +12,7 @@ describe('AnalysisController Tests', () => { // the tests container
         
 
         at.analyzeFile("Tests/TestFile.decaf"); 
+        console.log(st.getTokens());
 
         expect(st.getLength()).to.be.equal(5); 
     });

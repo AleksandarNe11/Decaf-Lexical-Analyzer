@@ -40,4 +40,10 @@ export class OperatorDFA extends DFA {
         return false;
     }
 
+    public resetDFA() { 
+        this.state = 0; 
+        this.testString = ""; 
+        this.lexeme = ""; 
+    }
+
 }

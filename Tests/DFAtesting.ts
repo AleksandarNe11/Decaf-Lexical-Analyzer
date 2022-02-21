@@ -23,8 +23,6 @@ describe('DFA testing', () => {
         expect(ib).to.be.an("object").to.have.property("value").to.equal("#fff"); 
     });*/
 
-    
-
     it('CommentDFA: comment using // with newline at the end', () => {
         const ib_comment = new InputBuffer("Tests/TestComment.decaf");
         expect(c_dfa.evaluateDFA(ib_comment)).to.be.equal(true);
@@ -120,10 +118,17 @@ describe('DFA testing', () => {
         expect(n_dfa.evaluateDFA(ib_num10)).to.be.equal(false);
     });
 
-    it('OperatorDFA', () => {
+    it('OperatorDFA: int num = 16;', () => {
         const ib_op = new InputBuffer("Tests/TestFile.decaf", 8);
         expect(o_dfa.evaluateDFA(ib_op)).to.be.equal(true);
     });
+
+    /*it('OperatorDFA', () => {
+        const ib_op = new InputBuffer("Tests/TestFile.decaf", 8);
+        ib_op.setPointerValues(1, 12); 
+        expect(o_dfa.evaluateDFA(ib_op)).to.be.equal(true);
+    });*/
+
     it('OperatorDFA1: this is a;', () => {
         const ib_op1 = new InputBuffer("Tests/TestOperator1.decaf");
         expect(o_dfa.evaluateDFA(ib_op1)).to.be.equal(true);
