@@ -109,6 +109,7 @@ export class AnalysisController {
         } else if (c === "\"") { 
             toInvoke = DFA.STRING; 
         } else {
+            ib.increment();
             toInvoke = DFA.WHITESPACE;  
         }
 
@@ -130,7 +131,7 @@ export class AnalysisController {
                 // console.log("starting char:" + ib.getForwardP()); 
                 // console.log(" "); 
                 valid = this.identifierDFA.evaluateDFA(ib);
-                // valid = this.errorHandler.handleIdentifier(ib.digest(), ib.getLineNumber());
+                if (!valid) this.errorHandler.handleIdentifier(ib); 
                 break; 
             case (DFA.NUMBER): 
                 valid = this.numberDFA.evaluateDFA(ib);

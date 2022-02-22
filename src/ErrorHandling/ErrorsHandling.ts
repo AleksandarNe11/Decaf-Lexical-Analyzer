@@ -1,62 +1,35 @@
 import { Operators } from "../Lexemes/Operators";
 import { Identifiers } from "../Lexemes/Identifiers";
 import { Keywords } from "../Lexemes/Keywords";
+import { InputBuffer } from "../BufferSystem/InputBuffer";
 
 export class ErrorHandling { 
-    private errors: Array<any> = [];
-    private numErrors: number = 0;
+    private errors: String[] = [];
 
     /** 
      * spelling errors
      * check identifiers, operators, and keywords
      */
-    handleIdentifier(lexeme: string, line: number): boolean {
-        if (Keywords.contains(lexeme)) {
-            this.errors.push([line, lexeme]);
-            console.log("Compiler error at line number " + line);
-            console.log("\tERROR: " + lexeme + " is a reserved keyword and cannot be used as an identifier.")
-            this.numErrors++;
-            return false;
-        }
-        if (!Identifiers.contains(lexeme)) {
-            this.errors.push([line, lexeme]);
-            this.numErrors++;
-            return false;
-        }
-        return true;
+    handleIdentifier(ib: InputBuffer): void {
+        this.errors.push("Identifier Error on line: " + ib.getLineNumber() + ": " + ib.digest() + " is not a valid identifier \n \n");
     }
 
-    handleOperator(lexeme: string, line: number): boolean {
-        if (!Operators.contains(lexeme)) {
-            this.errors.push([line, lexeme]);
-            console.log("Compiler error at line number " + line);
-            console.log("\tERROR: " + lexeme + " is not a valid operator");
-            this.numErrors++;
-            return false;
+    handleOperator(ib: InputBuffer): void {
+        this.errors.push("Operator Error on line: " + ib.getLineNumber() + ": " + ib.digest() + " is not a valid operator \n \n");
+    }
+
+    handleNumber(ib: InputBuffer): void {
+        this.errors.push("Number Error on line: " + ib.getLineNumber() + ": " + ib.digest() + " is not a valid number \n \n");
+    }
+
+    handleString(ib: InputBuffer, str: string): void {
+        if (str[str.length - 1] != "\"") {
+            this.errors.push("String Error on line: " + ib.getLineNumber() + ": " + ib.digest() + " is not a valid String \n \n");
         }
-        return true;
     }
 
-    handleNumber(lexeme: string, line: number): boolean {
-        
-        return false;
-    }
-
-    handleString(lexeme: string, line: number): boolean {
-        //unterminated strings should be considered an error
-        if (!(lexeme[0] === "'" && lexeme[lexeme.length - 1] === "'")) {
-            this.errors.push([line, lexeme]);
-            console.log("Compiler error at line number " + line);
-            console.log("\tERROR: Unterminated string literal");
-            this.numErrors++;
-            return false;
-        }
-        return true;
-    }
-
-    //total number of errors
-    getNumErrors(): number {
-        return this.numErrors;
+    getErrors(): String[] { 
+        return this.errors; 
     }
 
 }
