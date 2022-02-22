@@ -1,6 +1,3 @@
-import { Operators } from "../Lexemes/Operators";
-import { Identifiers } from "../Lexemes/Identifiers";
-import { Keywords } from "../Lexemes/Keywords";
 import { InputBuffer } from "../BufferSystem/InputBuffer";
 
 export class ErrorHandling { 
