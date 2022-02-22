@@ -55,6 +55,7 @@ export enum TTypes {
     T_RIGHTSHIFT, //     >>
     T_RPAREN, //         )
     T_RSB, //            ]
+    T_STATIC, //         static
     T_SEMICOLON, //      ;
     T_STRINGCONSTANT, // string_lit (see section on String literals)
     T_STRINGTYPE, //     string

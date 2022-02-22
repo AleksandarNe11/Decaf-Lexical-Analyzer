@@ -16,6 +16,7 @@ import { Keywords } from '../Lexemes/Keywords';
 import { Punctuation } from '../Lexemes/Punctuation';
 // from ErrorHandling
 import { ErrorHandling } from '../ErrorHandling/ErrorsHandling';
+import { FileOutput } from '../FileOutput/FileOutput';
 
 export class AnalysisController { 
 
@@ -57,6 +58,9 @@ export class AnalysisController {
         }
 
         console.log(this.symbolTable.getTokens());
+
+        const fileOutput: FileOutput = new FileOutput(this.symbolTable, "yo"); 
+        fileOutput.createSymbolTableFile();
     }
 
     /**
@@ -126,19 +130,19 @@ export class AnalysisController {
                 // console.log("starting char:" + ib.getForwardP()); 
                 // console.log(" "); 
                 valid = this.identifierDFA.evaluateDFA(ib);
-                valid = this.errorHandler.handleIdentifier(ib.digest(), ib.getLineNumber());
+                // valid = this.errorHandler.handleIdentifier(ib.digest(), ib.getLineNumber());
                 break; 
             case (DFA.NUMBER): 
                 valid = this.numberDFA.evaluateDFA(ib);
-                valid = this.errorHandler.handleNumber(ib.digest(), ib.getLineNumber());
+                // valid = this.errorHandler.handleNumber(ib.digest(), ib.getLineNumber());
                 break; 
             case (DFA.OPERATOR): 
                 valid = this.operatorDFA.evaluateDFA(ib); 
-                valid = this.errorHandler.handleOperator(ib.digest(), ib.getLineNumber());
+                // valid = this.errorHandler.handleOperator(ib.digest(), ib.getLineNumber());
                 break; 
             case (DFA.STRING): 
                 valid = this.stringDFA.evaluateDFA(ib); 
-                valid = this.errorHandler.handleString(ib.digest(), ib.getLineNumber());
+                // valid = this.errorHandler.handleString(ib.digest(), ib.getLineNumber());
                 break;
             case (DFA.WHITESPACE): 
                 this.incrementToNextToken(ib); 

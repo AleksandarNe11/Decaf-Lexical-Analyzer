@@ -38,7 +38,7 @@ var NumberDFA = (function (_super) {
         }
     };
     NumberDFA.prototype.state1 = function (c) {
-        if (c === "x") {
+        if (c === "x" || c === "X") {
             this.state = 3;
         }
         else if (c === ".") {

@@ -13,6 +13,8 @@ var Identifiers_1 = require("./../Lexemes/Identifiers");
 var Operators_1 = require("../Lexemes/Operators");
 var Keywords_1 = require("../Lexemes/Keywords");
 var Punctuation_1 = require("../Lexemes/Punctuation");
+var ErrorsHandling_1 = require("../ErrorHandling/ErrorsHandling");
+var FileOutput_1 = require("../FileOutput/FileOutput");
 var AnalysisController = (function () {
     function AnalysisController(symbolTable) {
         this.commentDFA = new CommentDFA_1.CommentDFA();
@@ -20,6 +22,7 @@ var AnalysisController = (function () {
         this.numberDFA = new NumberDFA_1.NumberDFA();
         this.operatorDFA = new OperatorDFA_1.OperatorDFA();
         this.stringDFA = new StringDFA_1.StringDFA();
+        this.errorHandler = new ErrorsHandling_1.ErrorHandling();
         this.symbolTable = symbolTable;
     }
     AnalysisController.prototype.analyzeFile = function (fileName) {
@@ -41,6 +44,8 @@ var AnalysisController = (function () {
             ib.digest();
         }
         console.log(this.symbolTable.getTokens());
+        var fileOutput = new FileOutput_1.FileOutput(this.symbolTable, "yo");
+        fileOutput.createSymbolTableFile();
     };
     AnalysisController.prototype.decideDFA = function (c, ib) {
         if (c === "}") {
@@ -101,6 +106,9 @@ var AnalysisController = (function () {
                 break;
             case (DFA.OPERATOR):
                 valid = this.operatorDFA.evaluateDFA(ib);
+                break;
+            case (DFA.STRING):
+                valid = this.stringDFA.evaluateDFA(ib);
                 break;
             case (DFA.WHITESPACE):
                 this.incrementToNextToken(ib);

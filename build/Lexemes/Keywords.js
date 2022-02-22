@@ -44,7 +44,8 @@ var Keywords = (function () {
         ["NewArray", TokenTypes_1.TTypes.T_NEWARRAY],
         ["Print", TokenTypes_1.TTypes.T_PRINT],
         ["ReadInteger", TokenTypes_1.TTypes.T_READINTEGER],
-        ["ReadLine", TokenTypes_1.TTypes.T_READLINE]
+        ["ReadLine", TokenTypes_1.TTypes.T_READLINE],
+        ["static", TokenTypes_1.TTypes.T_STATIC]
     ]);
     return Keywords;
 }());

@@ -34,7 +34,8 @@ export class Keywords {
         ["NewArray", TTypes.T_NEWARRAY], 
         ["Print", TTypes.T_PRINT], 
         ["ReadInteger", TTypes.T_READINTEGER], 
-        ["ReadLine", TTypes.T_READLINE]
+        ["ReadLine", TTypes.T_READLINE], 
+        ["static", TTypes.T_STATIC]
     ]); 
 
     static getCode(c: string): number { 
