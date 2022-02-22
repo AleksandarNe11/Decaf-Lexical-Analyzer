@@ -18,6 +18,16 @@ var FileOutput = (function () {
             });
         });
     };
+    FileOutput.prototype.createErrorSystem = function () {
+        var _this = this;
+        var stream = fs.createWriteStream("OutputFiles/ErrorLog.txt");
+        stream.once('open', function () {
+            var tokens = _this.errorSystem.getErrors();
+            tokens.map(function (error) {
+                stream.write(error);
+            });
+        });
+    };
     return FileOutput;
 }());
 exports.FileOutput = FileOutput;

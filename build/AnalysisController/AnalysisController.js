@@ -44,7 +44,7 @@ var AnalysisController = (function () {
             ib.digest();
         }
         console.log(this.symbolTable.getTokens());
-        var fileOutput = new FileOutput_1.FileOutput(this.symbolTable, "yo");
+        var fileOutput = new FileOutput_1.FileOutput(this.symbolTable, this.errorHandler);
         fileOutput.createSymbolTableFile();
     };
     AnalysisController.prototype.decideDFA = function (c, ib) {
@@ -85,6 +85,7 @@ var AnalysisController = (function () {
             toInvoke = DFA.STRING;
         }
         else {
+            ib.increment();
             toInvoke = DFA.WHITESPACE;
         }
         console.log("decideDFA: ");
@@ -100,12 +101,18 @@ var AnalysisController = (function () {
                 break;
             case (DFA.IDENTIFIER):
                 valid = this.identifierDFA.evaluateDFA(ib);
+                if (!valid)
+                    this.errorHandler.handleIdentifier(ib);
                 break;
             case (DFA.NUMBER):
                 valid = this.numberDFA.evaluateDFA(ib);
+                if (!valid)
+                    this.errorHandler.handleNumber(ib);
                 break;
             case (DFA.OPERATOR):
                 valid = this.operatorDFA.evaluateDFA(ib);
+                if (!valid)
+                    this.errorHandler.handleOperator(ib);
                 break;
             case (DFA.STRING):
                 valid = this.stringDFA.evaluateDFA(ib);

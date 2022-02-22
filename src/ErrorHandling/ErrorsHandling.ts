@@ -22,10 +22,12 @@ export class ErrorHandling {
         this.errors.push("Number Error on line: " + ib.getLineNumber() + ": " + ib.digest() + " is not a valid number \n \n");
     }
 
-    handleString(ib: InputBuffer, str: string): void {
-        if (str[str.length - 1] != "\"") {
+    handleString(ib: InputBuffer, str: string): boolean {
+        if (str[str.length - 1] !== "\"") {
             this.errors.push("String Error on line: " + ib.getLineNumber() + ": " + ib.digest() + " is not a valid String \n \n");
+            return false; 
         }
+        return true; 
     }
 
     getErrors(): String[] { 

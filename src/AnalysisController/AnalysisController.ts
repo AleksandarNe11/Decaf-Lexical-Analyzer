@@ -59,7 +59,7 @@ export class AnalysisController {
 
         console.log(this.symbolTable.getTokens());
 
-        const fileOutput: FileOutput = new FileOutput(this.symbolTable, "yo"); 
+        const fileOutput: FileOutput = new FileOutput(this.symbolTable, this.errorHandler); 
         fileOutput.createSymbolTableFile();
     }
 
@@ -135,15 +135,14 @@ export class AnalysisController {
                 break; 
             case (DFA.NUMBER): 
                 valid = this.numberDFA.evaluateDFA(ib);
-                // valid = this.errorHandler.handleNumber(ib.digest(), ib.getLineNumber());
+                if (!valid) this.errorHandler.handleNumber(ib);
                 break; 
             case (DFA.OPERATOR): 
                 valid = this.operatorDFA.evaluateDFA(ib); 
-                // valid = this.errorHandler.handleOperator(ib.digest(), ib.getLineNumber());
+                if (!valid) this.errorHandler.handleOperator(ib);
                 break; 
             case (DFA.STRING): 
                 valid = this.stringDFA.evaluateDFA(ib); 
-                // valid = this.errorHandler.handleString(ib.digest(), ib.getLineNumber());
                 break;
             case (DFA.WHITESPACE): 
                 this.incrementToNextToken(ib); 
