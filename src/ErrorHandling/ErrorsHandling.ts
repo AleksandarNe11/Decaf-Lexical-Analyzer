@@ -11,13 +11,6 @@ export class ErrorHandling {
      * check identifiers, operators, and keywords
      */
     handleIdentifier(lexeme: string, line: number): boolean {
-        if (Keywords.contains(lexeme)) {
-            this.errors.push([line, lexeme]);
-            console.log("Compiler error at line number " + line);
-            console.log("\tERROR: " + lexeme + " is a reserved keyword and cannot be used as an identifier.")
-            this.numErrors++;
-            return false;
-        }
         if (!Identifiers.contains(lexeme)) {
             this.errors.push([line, lexeme]);
             this.numErrors++;
