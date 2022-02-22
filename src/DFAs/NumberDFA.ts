@@ -30,7 +30,7 @@ export class NumberDFA extends DFA {
      * @param c 
      */
     private state1(c: string): void { 
-        if (c === "x") { 
+        if (c === "x" || c === "X") { 
             this.state = 3; 
         } else if (c === ".") { 
             this.state = 5; 

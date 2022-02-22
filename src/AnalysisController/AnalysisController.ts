@@ -14,6 +14,8 @@ import { Identifiers } from './../Lexemes/Identifiers';
 import { Operators } from '../Lexemes/Operators';
 import { Keywords } from '../Lexemes/Keywords';
 import { Punctuation } from '../Lexemes/Punctuation';
+// from ErrorHandling
+import { ErrorHandling } from '../ErrorHandling/ErrorsHandling';
 
 export class AnalysisController { 
 
@@ -26,6 +28,8 @@ export class AnalysisController {
     stringDFA: StringDFA = new StringDFA(); 
 
     symbolTable: SymbolTable; 
+
+    errorHandler = new ErrorHandling();
 
     constructor(symbolTable: SymbolTable) { 
         this.symbolTable = symbolTable; 
@@ -121,16 +125,20 @@ export class AnalysisController {
                 // console.log("evaluate identifier");
                 // console.log("starting char:" + ib.getForwardP()); 
                 // console.log(" "); 
-                valid = this.identifierDFA.evaluateDFA(ib); 
+                valid = this.identifierDFA.evaluateDFA(ib);
+                valid = this.errorHandler.handleIdentifier(ib.digest(), ib.getLineNumber());
                 break; 
             case (DFA.NUMBER): 
-                valid = this.numberDFA.evaluateDFA(ib); 
+                valid = this.numberDFA.evaluateDFA(ib);
+                valid = this.errorHandler.handleNumber(ib.digest(), ib.getLineNumber());
                 break; 
             case (DFA.OPERATOR): 
                 valid = this.operatorDFA.evaluateDFA(ib); 
+                valid = this.errorHandler.handleOperator(ib.digest(), ib.getLineNumber());
                 break; 
             case (DFA.STRING): 
                 valid = this.stringDFA.evaluateDFA(ib); 
+                valid = this.errorHandler.handleString(ib.digest(), ib.getLineNumber());
                 break;
             case (DFA.WHITESPACE): 
                 this.incrementToNextToken(ib); 
