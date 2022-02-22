@@ -8,6 +8,7 @@ var InputBuffer = (function () {
         this.beginp = [1, 0];
         this.forwardp = [1, 0];
         this.endOfFile = false;
+        this.lastNewlineChar = -1;
         this.lineNumber = 1;
         this.fileReader = new UTF8FileReader_1.UTF8FileReader();
         if (bufferLength)
@@ -136,7 +137,10 @@ var InputBuffer = (function () {
         return this.endOfFile;
     };
     InputBuffer.prototype.incrementLineNumber = function () {
-        this.incrementLineNumber;
+        if (this.lastNewlineChar !== this.forwardp[1]) {
+            this.lineNumber++;
+        }
+        this.lastNewlineChar = this.forwardp[1];
     };
     InputBuffer.prototype.incrementBP = function () {
         this.beginp[1]++;

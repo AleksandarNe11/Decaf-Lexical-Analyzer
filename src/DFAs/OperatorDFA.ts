@@ -31,6 +31,12 @@ export class OperatorDFA extends DFA {
             } else { 
                 this.state = 1;
             }
+        } else {
+            if (this.isValidDelim(this.lexeme)) { 
+                this.state = 1;
+            } else { 
+                this.state = -1;
+            }
         }
     }
 

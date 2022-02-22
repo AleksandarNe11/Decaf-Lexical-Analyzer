@@ -14,6 +14,9 @@ export class InputBuffer {
     //Need to have some sort of attribute to define movement along 
     private endOfFile = false; 
 
+    //lastChar for increment check
+    private lastNewlineChar: number = -1;
+
     // may need to be incremented by the calling DFA but needs to exist and increment when \n is encountered
     private lineNumber: number = 1; 
 
@@ -181,7 +184,10 @@ export class InputBuffer {
     }
 
     incrementLineNumber(): void { 
-        this.incrementLineNumber; 
+        if (this.lastNewlineChar !== this.forwardp[1]) { 
+            this.lineNumber++;
+        }
+        this.lastNewlineChar = this.forwardp[1];
     }
 
     incrementBP() {

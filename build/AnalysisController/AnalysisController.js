@@ -32,11 +32,20 @@ var AnalysisController = (function () {
             else {
                 ib.digest();
             }
-            if (ib.isAtEndOfFile())
-                break;
         }
+        this.lastDFA = this.decideDFA(ib.getChar(), ib);
+        if (this.invokeDFA(ib)) {
+            this.addToken(ib);
+        }
+        else {
+            ib.digest();
+        }
+        console.log(this.symbolTable.getTokens());
     };
     AnalysisController.prototype.decideDFA = function (c, ib) {
+        if (c === "}") {
+            console.log(" ");
+        }
         var toInvoke = DFA.WHITESPACE;
         if (RegExpDefns_1.RegExpDefns.isDigit(c))
             toInvoke = DFA.NUMBER;
@@ -47,12 +56,11 @@ var AnalysisController = (function () {
             toInvoke = DFA.WHITESPACE;
         }
         else if (c === "\n") {
-            ib.increment();
             toInvoke = DFA.NEWLINE;
         }
         else if (c === "\r") {
             ib.increment();
-            return this.decideDFA(ib.getChar(), ib);
+            toInvoke = DFA.WHITESPACE;
         }
         else if (RegExpDefns_1.RegExpDefns.isDelim(c)) {
             if (c === "/") {

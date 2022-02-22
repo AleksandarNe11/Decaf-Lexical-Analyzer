@@ -43,8 +43,16 @@ export class AnalysisController {
             } else { 
                 ib.digest(); 
             }
-            if (ib.isAtEndOfFile()) break;
         }
+
+        this.lastDFA = this.decideDFA(ib.getChar(), ib);
+        if (this.invokeDFA(ib)) { 
+            this.addToken(ib); 
+        } else { 
+            ib.digest(); 
+        }
+
+        console.log(this.symbolTable.getTokens());
     }
 
     /**
@@ -52,6 +60,9 @@ export class AnalysisController {
      * @param c 
      */
     decideDFA(c: string, ib: InputBuffer): number { 
+        if (c === "}") { 
+            console.log(" ");
+        }
         //assign invalid in case of invalid character
         let toInvoke: number = DFA.WHITESPACE; 
         if (RegExpDefns.isDigit(c)) 
@@ -66,13 +77,12 @@ export class AnalysisController {
         }
 
         else if (c === "\n") { 
-            ib.increment();
             toInvoke = DFA.NEWLINE;
         } 
 
         else if (c === "\r") { 
             ib.increment(); 
-            return this.decideDFA(ib.getChar(), ib); 
+            toInvoke = DFA.WHITESPACE;
         }
 
         else if (RegExpDefns.isDelim(c)) { 
@@ -118,6 +128,9 @@ export class AnalysisController {
                 break; 
             case (DFA.OPERATOR): 
                 valid = this.operatorDFA.evaluateDFA(ib); 
+                break; 
+            case (DFA.STRING): 
+                valid = this.stringDFA.evaluateDFA(ib); 
                 break;
             case (DFA.WHITESPACE): 
                 this.incrementToNextToken(ib); 

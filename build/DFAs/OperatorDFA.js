@@ -44,6 +44,14 @@ var OperatorDFA = (function (_super) {
                 this.state = 1;
             }
         }
+        else {
+            if (this.isValidDelim(this.lexeme)) {
+                this.state = 1;
+            }
+            else {
+                this.state = -1;
+            }
+        }
     };
     OperatorDFA.prototype.isValidDelim = function (lexeme) {
         if (RegExpDefns_1.RegExpDefns.isDelim(lexeme))
